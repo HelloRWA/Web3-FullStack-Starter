@@ -3,8 +3,21 @@ import { useStorage } from '@vueuse/core'
 export const aoStore = defineStore('aoStore', () => {
   const state = $(useStorage('aoStore', { }))
 
+  const add = async (name, pid) => {
+    if (state[pid]) {
+      return {
+        err: 'alreadyExist',
+        msg: 'Already Exist'
+      }
+    }
 
-  return $$({ topicMap, items })
+    state[pid] = {
+      name,
+      createdAt: new Date()
+    }
+  }
+
+  return $$({ state, add})
 })
 
 if (import.meta.hot)

@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@nuxt/eslint-config": "^0.2.0",
+    "@vue-macros/nuxt": "^1.9.21",
     "eslint": "^8.57.0",
     "vue-tsc": "^2.0.6"
   }

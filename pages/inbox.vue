@@ -36,10 +36,10 @@ const filteredMails = computed(() => {
 const selectedMail = ref<Mail | null>()
 
 const isMailPanelOpen = computed({
-  get () {
+  get() {
     return !!selectedMail.value
   },
-  set (value: boolean) {
+  set(value: boolean) {
     if (!value) {
       selectedMail.value = null
     }
@@ -58,12 +58,14 @@ watch(filteredMails, () => {
   <UDashboardPage>
     <UDashboardPanel id="inbox" :width="400" :resizable="{ min: 300, max: 500 }">
       <UDashboardNavbar title="Inbox" :badge="filteredMails.length">
-        <template #right>
+        <template #center>
           <UTabs v-model="selectedTab" :items="tabItems" :ui="{ wrapper: '', list: { height: 'h-9', tab: { height: 'h-7', size: 'text-[13px]' } } }" />
+        </template>
+        <template #right>
+          <InboxNewBtn />
         </template>
       </UDashboardNavbar>
 
-      <!-- ~/components/inbox/InboxList.vue -->
       <InboxList v-model="selectedMail" :mails="filteredMails" />
     </UDashboardPanel>
 
@@ -81,7 +83,7 @@ watch(filteredMails, () => {
               <UButton icon="i-heroicons-archive-box" color="gray" variant="ghost" />
             </UTooltip>
 
-            <UTooltip text="Move to junk">
+            <UTooltip text="to Move junk">
               <UButton icon="i-heroicons-archive-box-x-mark" color="gray" variant="ghost" />
             </UTooltip>
 
@@ -120,8 +122,8 @@ watch(filteredMails, () => {
         <!-- ~/components/inbox/InboxMail.vue -->
         <InboxMail :mail="selectedMail" />
       </template>
-      <div v-else class="flex-1 hidden lg:flex items-center justify-center">
-        <UIcon name="i-heroicons-inbox" class="w-32 h-32 text-gray-400 dark:text-gray-500" />
+      <div v-else class="flex-1 hidden items-center justify-center lg:flex">
+        <UIcon name="i-heroicons-inbox" class="h-32 text-gray-400 w-32 dark:text-gray-500" />
       </div>
     </UDashboardPanel>
   </UDashboardPage>

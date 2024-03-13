@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/fonts',
     '@pinia/nuxt',
+    '@vue-macros/nuxt',
     '@vueuse/nuxt'
   ],
   ui: {
