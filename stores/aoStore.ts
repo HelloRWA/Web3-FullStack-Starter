@@ -1,24 +1,33 @@
 import { useStorage } from '@vueuse/core'
 
 export const aoStore = defineStore('aoStore', () => {
-  const state = $(useStorage('aoStore', { }))
+  const state = $(useStorage('aoStore', {}))
+  const stateArr = $computed(() => {
+    return Object.keys(state).map(id => {
+      return {
+        ...state[id],
+        id,
+     }
+    })
+  })
 
-  const add = async (name, pid) => {
-    if (state[pid]) {
+  const add = async (name, id) => {
+    if (state[id]) {
       return {
         err: 'alreadyExist',
         msg: 'Already Exist'
       }
     }
 
-    state[pid] = {
+    state[id] = {
       name,
+      latestMsgTime: new Date(),
       createdAt: new Date()
     }
     return true
   }
 
-  return $$({ state, add})
+  return $$({ state, stateArr, add})
 })
 
 if (import.meta.hot)

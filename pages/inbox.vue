@@ -22,15 +22,17 @@ const dropdownItems = [[{
   icon: 'i-heroicons-pause-circle'
 }]]
 
-const { data: mails } = await useFetch<Mail[]>('/api/mails', { default: () => [] })
+// const { data: mails } = await useFetch<Mail[]>('/api/mails', { default: () => [] })
 
+const { stateArr: mails } = $(aoStore())
 // Filter mails based on the selected tab
 const filteredMails = computed(() => {
+  console.log(`====> mails :`, mails)
   if (selectedTab.value === 1) {
-    return mails.value.filter(mail => !!mail.unread)
+    return mails.filter(mail => !!mail.unread)
   }
 
-  return mails.value
+  return mails
 })
 
 const selectedMail = ref<Mail | null>()
