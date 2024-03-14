@@ -1,7 +1,14 @@
-import { useStorage } from '@vueuse/core'
+import { createDataItemSigner, result,
+  results,
+  message,
+  spawn,
+  monitor,
+  unmonitor,
+  dryrun } from '@permaweb/aoconnect'
 
 export const aoStore = defineStore('aoStore', () => {
-  const state = $(useStorage('aoStore', {}))
+  const itemsCache = {}
+  const state = $(lsItemRef('aoStore', {}))
   const stateArr = $computed(() => {
     return Object.keys(state).map(id => {
       return {
@@ -27,7 +34,33 @@ export const aoStore = defineStore('aoStore', () => {
     return true
   }
 
-  return $$({ state, stateArr, add})
+  const remove = async (id) => {
+    delete state[id]
+  }
+
+  const loadList = async (id) => {
+    if (itemsCache[id]) {
+      return itemsCache[id]
+    }
+    let items = []
+    const rz = await results({
+      process: id,
+      sort: 'DESC',
+      limit: 25,
+    })
+
+    items = rz.edges.reverse()
+    itemsCache[id] = items
+    
+    return items
+  }
+
+  const loadOne = async () => {
+    
+  }
+
+
+  return $$({ state, stateArr, add, remove, loadList, loadOne})
 })
 
 if (import.meta.hot)

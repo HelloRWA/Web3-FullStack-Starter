@@ -2,16 +2,14 @@
 import { format, isToday } from 'date-fns'
 import type { Mail } from '~/types'
 
-defineProps({
-  mail: {
-    type: Object as PropType<Mail>,
-    required: true
-  },
-  selected: {
-    type: Boolean,
-    default: false
-  }
-})
+const { mail } = $defineProps<{
+  mail: Mail,
+}>()
+
+// load this process data list
+// send msg
+// auto load new message for this process and other process, so we can show last unread message on the left sidebar msg list
+
 </script>
 
 <template>
@@ -38,9 +36,7 @@ defineProps({
     <UDivider class="my-5" />
 
     <div class="flex-1">
-      <p class="text-lg">
-        {{ mail.body }}
-      </p>
+      <InboxListMessage :id="mail.id" />
     </div>
 
     <UDivider class="my-5" />
