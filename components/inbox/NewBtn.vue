@@ -16,15 +16,17 @@ const validate = (state: any): FormError[] => {
 }
 
 const { add } = $(aoStore())
+const { showError, showSuccess } = $(msgStore())
 
 async function onSubmit(event: FormSubmitEvent<any>) {
   const { name, pid } = event.data
   const rz = await add(name, pid)
   if (rz.err) {
-
+    showError(rz.msg)
     return
   }
   isShowNewModal = false
+  showSuccess('Add successed')
 }
 </script>
 <template>

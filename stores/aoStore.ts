@@ -15,6 +15,7 @@ export const aoStore = defineStore('aoStore', () => {
       name,
       createdAt: new Date()
     }
+    return true
   }
 
   return $$({ state, add})
