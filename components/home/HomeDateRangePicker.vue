@@ -11,17 +11,16 @@ const ranges = [
   { label: 'Last year', duration: { years: 1 } }
 ]
 
-const selected = defineModel({
-  type: Object as PropType<Range>,
-  required: true
-})
+let { modelValue } = $defineModels<{
+  modelValue: Range
+}>()
 
-function isRangeSelected (duration: Duration) {
-  return isSameDay(selected.value.start, sub(new Date(), duration)) && isSameDay(selected.value.end, new Date())
+function isRangeSelected(duration: Duration) {
+  return isSameDay(modelValue.start, sub(new Date(), duration)) && isSameDay(modelValue.end, new Date())
 }
 
-function selectRange (duration: Duration) {
-  selected.value = { start: sub(new Date(), duration), end: new Date() }
+function selectRange(duration: Duration) {
+  modelValue = { start: sub(new Date(), duration), end: new Date() }
 }
 </script>
 
@@ -29,24 +28,14 @@ function selectRange (duration: Duration) {
   <UPopover :popper="{ placement: 'bottom-start' }">
     <template #default="{ open }">
       <UButton color="gray" variant="ghost" :class="[open && 'bg-gray-50 dark:bg-gray-800']" trailing-icon="i-heroicons-chevron-down-20-solid">
-        {{ format(selected.start, 'd MMM, yyy') }} - {{ format(selected.end, 'd MMM, yyy') }}
+        {{ format(modelValue.start, 'd MMM, yyy') }} - {{ format(modelValue.end, 'd MMM, yyy') }}
       </UButton>
     </template>
 
     <template #panel="{ close }">
-      <div class="flex items-center sm:divide-x divide-gray-200 dark:divide-gray-800">
-        <div class="hidden sm:flex flex-col py-4">
-          <UButton
-            v-for="(range, index) in ranges"
-            :key="index"
-            :label="range.label"
-            color="gray"
-            variant="ghost"
-            class="rounded-none px-6"
-            :class="[isRangeSelected(range.duration) ? 'bg-gray-100 dark:bg-gray-800' : 'hover:bg-gray-50 dark:hover:bg-gray-800/50']"
-            truncate
-            @click="selectRange(range.duration)"
-          />
+      <div class="flex divide-gray-200 items-center sm:divide-x dark:divide-gray-800">
+        <div class="flex-col py-4 hidden sm:flex">
+          <UButton v-for="(range, index) in ranges" :key="index" :label="range.label" color="gray" variant="ghost" class="rounded-none px-6" :class="[isRangeSelected(range.duration) ? 'bg-gray-100 dark:bg-gray-800' : 'hover:bg-gray-50 dark:hover:bg-gray-800/50']" truncate @click="selectRange(range.duration)" />
         </div>
 
         <DatePicker v-model="selected" @close="close" />

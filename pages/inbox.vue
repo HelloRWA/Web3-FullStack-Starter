@@ -27,7 +27,6 @@ const dropdownItems = [[{
 const { stateArr: mails } = $(aoStore())
 // Filter mails based on the selected tab
 const filteredMails = computed(() => {
-  console.log(`====> mails :`, mails)
   if (selectedTab.value === 1) {
     return mails.filter(mail => !!mail.unread)
   }

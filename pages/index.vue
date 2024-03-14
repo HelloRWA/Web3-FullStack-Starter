@@ -26,13 +26,13 @@ const period = ref<Period>('daily')
           <UTooltip text="Notifications" :shortcuts="['N']">
             <UButton color="gray" variant="ghost" square @click="isNotificationsSlideoverOpen = true">
               <UChip color="red" inset>
-                <UIcon name="i-heroicons-bell" class="w-5 h-5" />
+                <UIcon name="i-heroicons-bell" class="h-5 w-5" />
               </UChip>
             </UButton>
           </UTooltip>
 
           <UDropdown :items="items">
-            <UButton icon="i-heroicons-plus" size="md" class="ml-1.5 rounded-full" />
+            <UButton icon="i-heroicons-plus" size="md" class="rounded-full ml-1.5" />
           </UDropdown>
         </template>
       </UDashboardNavbar>
@@ -51,7 +51,7 @@ const period = ref<Period>('daily')
         <!-- ~/components/home/HomeChart.vue -->
         <HomeChart :period="period" :range="range" />
 
-        <div class="grid lg:grid-cols-2 lg:items-start gap-8 mt-8">
+        <div class="mt-8 grid gap-8 lg:grid-cols-2 lg:items-start">
           <!-- ~/components/home/HomeSales.vue -->
           <HomeSales />
           <!-- ~/components/home/HomeCountries.vue -->
