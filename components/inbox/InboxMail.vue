@@ -2,10 +2,14 @@
 import { format, isToday } from 'date-fns'
 import type { Mail } from '~/types'
 import { nextTick } from 'vue'
+import { useElementVisibility, watchDebounced } from '@vueuse/core'
 
 const { mail } = $defineProps<{
   mail: Mail,
 }>()
+
+const msgTop = ref(null)
+const msgTopIsVisible = useElementVisibility(msgTop)
 
 // load this process data list
 // send msg
@@ -23,6 +27,7 @@ const scrollToBottom = () => {
     msgBottom.scrollIntoView({ behavior: 'smooth' })
   })
 }
+
 const doSubmit = async () => {
   if (isLoading) return
   isLoading = true
@@ -43,6 +48,18 @@ const doSubmit = async () => {
   msg = ''
   await loadInboxList(mail.id)
 }
+
+let isTopLoading = $ref(false)
+watchDebounced(
+  msgTopIsVisible,
+  async () => {
+    if (Object.keys(itemsCache[mail.id]).length === 0) return
+    isTopLoading = true
+    await loadInboxList(mail.id)
+    isTopLoading = false
+  },
+  { debounce: 1000, maxWait: 1000 },
+)
 
 defineShortcuts({
   meta_enter: {
@@ -77,7 +94,12 @@ defineShortcuts({
 
       <UDivider class="" />
     </div>
-    <div class="my-5"> </div>
+    <div ref="msgTop" class="my-5">
+      &nbsp;
+      <div v-show="isTopLoading" class="flex py-10 items-center justify-center">
+        <Loading class="h-8 w-8" />
+      </div>
+    </div>
     <div class="flex-1">
       <InboxListMessage :id="mail.id" @loaded="scrollToBottom" />
     </div>

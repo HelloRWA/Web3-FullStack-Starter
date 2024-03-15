@@ -109,12 +109,15 @@ export const aoStore = defineStore('aoStore', () => {
       itemsCache[process] = {}
     }
 
-    isInboxLoading = true
-    const cachedIndex = Object.keys(itemsCache[process])
+    const cachedIndex = Object.keys(itemsCache[process]).map(item => parseInt(item))
     const allIndex = useRange(1, parseInt(inboxCount) + 1)
     const waitForReadIndex = useDifference(allIndex, cachedIndex).reverse()
+    if (waitForReadIndex.length === 0) {
+      return
+    }
+    
+    isInboxLoading = true
     const waitForReadIndexTrunk = useChunk(waitForReadIndex, limit)
-
     await Promise.all(waitForReadIndexTrunk[0].map(async index => {
       if (itemsCache[process][index]) {
         return itemsCache[process][index]
