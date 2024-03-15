@@ -79,7 +79,7 @@ defineShortcuts({
           {{ mail.id }}
         </p>
         <p class="text-gray-400 line-clamp-1 dark:text-gray-500">
-          {{ mail.body }} body
+          {{ mail.body }}
         </p>
       </div>
 

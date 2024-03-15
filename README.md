@@ -1,3 +1,14 @@
+## Features
+
+### Inbox
+
+User can add process, and send / receive the process's new message
+
+* [x] add new process
+* [x] process msg list
+* [x] show avatar by the pid/msgId seed via [Bottts Neutral](https://www.dicebear.com/styles/bottts-neutral/)
+* [] send message to process
+
 ![nuxt-ui-dashboard-social-card](https://github.com/nuxt-ui-pro/dashboard/assets/739984/f785284b-7db2-4732-af0e-2cb3c0bd7ca2)
 
 # Nuxt UI Pro - Dashboard template

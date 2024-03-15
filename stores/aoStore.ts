@@ -1,13 +1,16 @@
-import { createDataItemSigner, result,
+import {
+  createDataItemSigner,
+  result,
   results,
   message,
   spawn,
   monitor,
   unmonitor,
-  dryrun } from '@permaweb/aoconnect'
+  dryrun
+} from '@permaweb/aoconnect'
 
 export const aoStore = defineStore('aoStore', () => {
-  const itemsCache = {}
+  const itemsCache = $ref({})
   const state = $(lsItemRef('aoStore', {}))
   const stateArr = $computed(() => {
     return Object.keys(state).map(id => {
@@ -55,12 +58,87 @@ export const aoStore = defineStore('aoStore', () => {
     return items
   }
 
-  const loadOne = async () => {
-    
+  const loadOne = async (process, message) => {
+    let { Messages, Spawns, Output, Error } = await result({
+      message,
+      process,
+    });
+
+    return { Messages, Spawns, Output, Error }
   }
 
+  const sendMessage = async (process, data) => {
+    await globalThis.arweaveWallet.connect(['SIGN_TRANSACTION'])
+    const rz = await message({
+      process,
+      signer: createDataItemSigner(globalThis.arweaveWallet),
+      data,
+    })
+    return rz
+  }
 
-  return $$({ state, stateArr, add, remove, loadList, loadOne})
+  const getDryrunData = (rz, key) => {
+    return useGet(useKeyBy(useGet(rz, 'Messages[0].Tags'), 'name'), key)
+  }
+  const getInboxCount = async (process: string, isForce = false) => {
+    if (state[process].inboxCount && !isForce) {
+      return state[process].inboxCount
+    }
+
+    let rz = await dryrun({
+          process, // Use the processId from the context
+          tags: [
+            {
+              name: 'Target',
+              value: process, // Use the processId from the context
+            },
+            { name: 'Action', value: '#Inbox' },
+          ],
+          data: '#Inbox',
+     });
+    rz = getDryrunData(rz, 'InboxCount.value')
+    state[process].inboxCount = rz
+    return rz
+  }
+
+  const loadInboxList = async (process: string, limit = 10) => {
+    const inboxCount = await getInboxCount(process, true)
+    if (!itemsCache[process]) {
+      itemsCache[process] = {}
+    }
+
+    const cachedIndex = Object.keys(itemsCache[process])
+    const allIndex = useRange(1, parseInt(inboxCount) + 1)
+    const waitForReadIndex = useDifference(allIndex, cachedIndex)
+    const waitForReadIndexTrunk = useChunk(waitForReadIndex, limit).reverse()
+
+    await Promise.all(waitForReadIndexTrunk[0].map(async index => {
+      index = String(index)
+      if (itemsCache[process][index]) {
+        return itemsCache[process][index]
+      }
+
+      const rz = await dryrun({
+        process,
+        tags: [
+          {
+            name: 'Target',
+            value: process,
+          },
+          { name: 'Action', value: 'CheckInbox' },
+          { name: 'Index', value: index },
+        ],
+      })
+      itemsCache[process][index] = {
+        ...getDryrunData(rz, 'MessageDetails.value'),
+        index,
+      }
+
+      return itemsCache[process][index]
+    }))
+  }
+
+  return $$({ state, stateArr, itemsCache, add, remove, loadList, loadOne, sendMessage, getInboxCount, loadInboxList})
 })
 
 if (import.meta.hot)

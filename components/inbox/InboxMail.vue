@@ -9,6 +9,18 @@ const { mail } = $defineProps<{
 // load this process data list
 // send msg
 // auto load new message for this process and other process, so we can show last unread message on the left sidebar msg list
+const { sendMessage } = $(aoStore())
+const { showSuccess } = $(msgStore())
+
+let msg = $ref('')
+let isLoading = $ref(false)
+const doSubmit = async () => {
+  if (isLoading) return
+  isLoading = true
+  const rz = await sendMessage(mail.id, msg)
+  showSuccess('Send message successed!')
+  isLoading = false
+}
 
 </script>
 
@@ -16,7 +28,7 @@ const { mail } = $defineProps<{
   <UDashboardPanelContent>
     <div class="flex justify-between">
       <div class="flex gap-4 items-center">
-        <!-- <UAvatar v-bind="mail.from.avatar" :alt="mail.from.name" size="lg" /> -->
+        <DicebearAvatar :seed="mail.id" :alt="mail.name" size="lg" />
 
         <div class="min-w-0">
           <p class="font-semibold text-gray-900 dark:text-white">
@@ -41,8 +53,8 @@ const { mail } = $defineProps<{
 
     <UDivider class="my-5" />
 
-    <form @submit.prevent>
-      <UTextarea color="gray" required size="xl" :rows="5" :placeholder="`Reply to ${mail.name}`">
+    <form :disabled="isLoading" @submit.prevent="doSubmit">
+      <UTextarea v-model="msg" color="gray" required size="xl" :rows="5" :placeholder="`Reply to ${mail.name}`">
         <UButton type="submit" color="black" label="Send" icon="i-heroicons-paper-airplane" class="right-3.5 bottom-2.5 absolute" />
       </UTextarea>
     </form>
