@@ -11,6 +11,7 @@ import {
 
 export const aoStore = defineStore('aoStore', () => {
   const itemsCache = $ref({})
+  let isInboxLoading = $ref(false)
   const state = $(lsItemRef('aoStore', {}))
   const stateArr = $computed(() => {
     return Object.keys(state).map(id => {
@@ -107,6 +108,7 @@ export const aoStore = defineStore('aoStore', () => {
       itemsCache[process] = {}
     }
 
+    isInboxLoading = true
     const cachedIndex = Object.keys(itemsCache[process])
     const allIndex = useRange(1, parseInt(inboxCount) + 1)
     const waitForReadIndex = useDifference(allIndex, cachedIndex)
@@ -136,9 +138,10 @@ export const aoStore = defineStore('aoStore', () => {
 
       return itemsCache[process][index]
     }))
+    isInboxLoading = false
   }
 
-  return $$({ state, stateArr, itemsCache, add, remove, loadList, loadOne, sendMessage, getInboxCount, loadInboxList})
+  return $$({ state, stateArr, itemsCache, isInboxLoading, add, remove, loadList, loadOne, sendMessage, getInboxCount, loadInboxList})
 })
 
 if (import.meta.hot)

@@ -9,7 +9,7 @@ const { mail } = $defineProps<{
 // load this process data list
 // send msg
 // auto load new message for this process and other process, so we can show last unread message on the left sidebar msg list
-const { sendMessage } = $(aoStore())
+const { sendMessage, loadInboxList } = $(aoStore())
 const { showSuccess } = $(msgStore())
 
 let msg = $ref('')
@@ -20,7 +20,16 @@ const doSubmit = async () => {
   const rz = await sendMessage(mail.id, msg)
   showSuccess('Send message successed!')
   isLoading = false
+  msg = ''
+  await loadInboxList(mail.id)
 }
+
+defineShortcuts({
+  meta_enter: {
+    usingInput: 'msg',
+    handler: doSubmit
+  }
+})
 
 </script>
 
@@ -54,8 +63,10 @@ const doSubmit = async () => {
     <UDivider class="my-5" />
 
     <form :disabled="isLoading" @submit.prevent="doSubmit">
-      <UTextarea v-model="msg" color="gray" required size="xl" :rows="5" :placeholder="`Reply to ${mail.name}`">
-        <UButton type="submit" color="black" label="Send" icon="i-heroicons-paper-airplane" class="right-3.5 bottom-2.5 absolute" />
+      <UTextarea :disabled="isLoading" v-model="msg" name="msg" color="gray" required size="xl" :rows="5" :placeholder="`Reply to ${mail.name}`">
+        <UIcon v-show="isLoading" name="i-line-md-loading-twotone-loop" class="h-8 top-1/2 left-1/2 w-8 absolute" dynamic />
+        <UButton :disabled="isLoading" type="submit" color="black" label="Send" icon="i-heroicons-paper-airplane" class="right-3.5 bottom-2.5 absolute">
+        </UButton>
       </UTextarea>
     </form>
   </UDashboardPanelContent>

@@ -4,10 +4,10 @@ const { id } = $defineProps<{
 }>()
 
 
-const { itemsCache, loadInboxList } = $(aoStore())
+const { itemsCache, loadInboxList, isInboxLoading: isLoading } = $(aoStore())
 
 const items = $computed(() => {
-  return useSortBy(useFilter(itemsCache[id], item => !!item.Data), 'index')
+  return useSortBy(useFilter(itemsCache[id], item => !!item.Data), item => parseInt(item.index))
 })
 
 watchEffect(async () => {
@@ -45,6 +45,9 @@ const getData = item => {
         </div>
         <span v-if="false" class="font-normal text-sm text-gray-500 dark:text-gray-400">Delivered</span>
       </div>
+    </div>
+    <div class="flex py-10 items-center justify-center" v-show="isLoading">
+      <UIcon name="i-line-md-loading-twotone-loop" class="h-8 w-8" dynamic />
     </div>
   </div>
 </template>
