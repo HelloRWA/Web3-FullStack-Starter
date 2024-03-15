@@ -103,15 +103,15 @@ export const aoStore = defineStore('aoStore', () => {
     return rz
   }
 
-  const loadInboxList = async (process: string, limit = 10) => {
+  const loadInboxList = async (process: string, limit = 10, isNewer = true) => {
     if (!itemsCache[process]) {
       itemsCache[process] = {}
-      await getInboxCount(process, true)
     }
 
-    const { inboxCount } = state[process]
-    const cachedIndex = Object.keys(itemsCache[process]).map(item => parseInt(item))
-    const allIndex = useRange(1, parseInt(inboxCount) + 1)
+    const inboxCount = await getInboxCount(process, true)
+    const cachedIndex = useWithout(Object.keys(itemsCache[process]).map(item => parseInt(item)), 999999)
+    const start = isNewer ? useMax(cachedIndex) : 1
+    const allIndex = useRange(start, parseInt(inboxCount) + 1)
     const waitForReadIndex = useDifference(allIndex, cachedIndex).reverse()
     if (waitForReadIndex.length === 0) {
       return
@@ -119,6 +119,7 @@ export const aoStore = defineStore('aoStore', () => {
     
     isInboxLoading = true
     const waitForReadIndexTrunk = useChunk(waitForReadIndex, limit)
+
     await Promise.all(waitForReadIndexTrunk[0].map(async index => {
       if (itemsCache[process][index]) {
         return itemsCache[process][index]

@@ -14,7 +14,7 @@ const msgTopIsVisible = useElementVisibility(msgTop)
 // load this process data list
 // send msg
 // auto load new message for this process and other process, so we can show last unread message on the left sidebar msg list
-const { sendMessage, loadInboxList, itemsCache } = $(aoStore())
+const { sendMessage, loadInboxList, itemsCache, isInboxLoading } = $(aoStore())
 const { showSuccess } = $(notificationStore())
 const { address } = $(arweaveWalletStore())
 
@@ -22,6 +22,7 @@ const msgBottom = $ref(null)
 let msg = $ref('')
 let isLoading = $ref(false)
 
+const loadedItemsCount = $computed(() => Object.keys(itemsCache[mail.id]).length)
 const scrollToBottom = () => {
   nextTick(() => {
     msgBottom.scrollIntoView({ behavior: 'smooth' })
@@ -47,19 +48,18 @@ const doSubmit = async () => {
   isLoading = false
   msg = ''
   await loadInboxList(mail.id)
+  scrollToBottom()
 }
 
 let isTopLoading = $ref(false)
-watchDebounced(
-  msgTopIsVisible,
-  async () => {
-    if (Object.keys(itemsCache[mail.id]).length === 0) return
-    isTopLoading = true
-    await loadInboxList(mail.id)
-    isTopLoading = false
-  },
-  { debounce: 1000, maxWait: 1000 },
-)
+
+watchDebounced(msgTopIsVisible, async () => {
+  if (!msgTopIsVisible.value || isTopLoading || loadedItemsCount === 0) return
+
+  isTopLoading = true
+  await loadInboxList(mail.id, 10, false)
+  isTopLoading = false
+})
 
 defineShortcuts({
   meta_enter: {
@@ -100,14 +100,14 @@ defineShortcuts({
         <Loading class="h-8 w-8" />
       </div>
     </div>
-    <div class="flex-1">
+    <div class="flex-1 min-h-50">
       <InboxListMessage :id="mail.id" @loaded="scrollToBottom" />
     </div>
     <div class="my-5" ref="msgBottom"> </div>
     <div class="-bottom-4 sticky">
-      <form :disabled="isLoading" @submit.prevent="doSubmit">
+      <form @submit.prevent="doSubmit">
         <UTextarea :disabled="isLoading" v-model="msg" name="msg" color="gray" required size="xl" :rows="5" :placeholder="`Reply to ${mail.name}`">
-          <Loading v-show="isLoading" class="h-8 top-1/2 left-1/2 w-8 absolute" />
+          <!-- <Loading v-show="isLoading" class="h-8 top-1/2 left-1/2 w-8 absolute" /> -->
           <UButton :disabled="isLoading" type="submit" color="black" label="Send" icon="i-heroicons-paper-airplane" class="right-3.5 bottom-2.5 absolute">
           </UButton>
         </UTextarea>

@@ -17,10 +17,20 @@ const links = [{
   label: 'Inbox',
   icon: 'i-heroicons-inbox',
   to: '/inbox',
-  badge: '4',
+  badge: '',
   tooltip: {
     text: 'Inbox',
     shortcuts: ['G', 'I']
+  }
+}, {
+  id: 'ao-effect',
+  label: 'AO Effect',
+  icon: 'i-bx-bxs-game',
+  to: '/ao-effect',
+  badge: '',
+  tooltip: {
+    text: 'AO Effect',
+    shortcuts: ['G', 'A']
   }
 }, {
   id: 'users',
@@ -108,7 +118,7 @@ const colors = computed(() => defaultColors.value.map(color => ({ ...color, acti
 
         <UDashboardSidebarLinks :links="footerLinks" />
 
-        <UDivider class="sticky bottom-0" />
+        <UDivider class="bottom-0 sticky" />
 
         <template #footer>
           <!-- ~/components/UserDropdown.vue -->

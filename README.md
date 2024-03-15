@@ -11,6 +11,11 @@ User can add process, and send / receive the process's new message
 * [x] playsound while new message arrived (interval with 5 seconds)
 * [x] load more while scroll to top(which will load older msg)
 
+
+### ao-Effect
+
+* [] show ao-Effect ui
+
 ## Credits
 
 * Nuxt UI/ Nuxt UI Pro : [Click here](https://ui.nuxt.com/pro?aff=KokMD)

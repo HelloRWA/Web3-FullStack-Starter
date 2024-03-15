@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const { id } = $defineProps<{
-  id: string // process id
+const { id, pendingMsg } = $defineProps<{
+  id: string, // process id
 }>()
 
 import audioFile from '@/assets/notify.mp3'; // Adjust the path accordingly
@@ -20,7 +20,6 @@ const doLoadMore = async () => {
   emitLoaded()
 }
 watchEffect(doLoadMore)
-
 
 const playAudio = () => {
   const audio = new Audio(audioFile);
