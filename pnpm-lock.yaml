@@ -70,6 +70,9 @@ devDependencies:
   '@vue-macros/nuxt':
     specifier: ^1.9.21
     version: 1.9.21(@vue-macros/reactivity-transform@0.4.3)(@vueuse/core@10.9.0)(nuxt@3.10.3)(rollup@4.12.0)(typescript@5.3.3)(vite@5.1.4)(vue-tsc@2.0.6)(vue@3.4.19)
+  arconnect:
+    specifier: ^1.0.3
+    version: 1.0.3
   eslint:
     specifier: ^8.57.0
     version: 8.57.0
@@ -4128,6 +4131,10 @@ packages:
     dependencies:
       arweave: 1.14.4
     dev: false
+
+  /arconnect@1.0.3:
+    resolution: {integrity: sha512-A4BTa1hl8SIbAMVUOsIiLwavmCvIMpbEFSem64klDBuBOMoIuEMUPxP5AoUfUxJZwUdL3NhNj584lCWUSGtdyA==}
+    dev: true
 
   /are-we-there-yet@2.0.0:
     resolution: {integrity: sha512-Ci/qENmwHnsYo9xKIcUJN5LeDKdJ6R1Z1j9V/J5wyq8nh/mYPEpIKJbBZXtZjG04HiK7zV/p6Vs9952MrMeUIw==}

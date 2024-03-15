@@ -12,7 +12,7 @@ export interface User {
 }
 
 export interface Mail {
-  id: number
+  id: string
   unread?: boolean
   from: User
   subject: string

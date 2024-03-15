@@ -3,9 +3,10 @@ const { id } = $defineProps<{
   id: string
 }>()
 
+const loaded = defineEmit('loaded')
 
 const { itemsCache, loadInboxList, isInboxLoading: isLoading } = $(aoStore())
-
+const { address, getActiveAddress } = $(arweaveWalletStore())
 const items = $computed(() => {
   return useSortBy(useFilter(itemsCache[id], item => !!item.Data), item => parseInt(item.index))
 })
@@ -14,10 +15,12 @@ watchEffect(async () => {
   if (!id) return
 
   await loadInboxList(id)
+  loaded()
 })
 
-const myAddress = 'someone'
-const isSelf = item => item.author === myAddress
+onMounted(getActiveAddress)
+
+const isSelf = item => item.From === address
 
 const getData = item => {
   return item.Data
@@ -43,11 +46,14 @@ const getData = item => {
         <div class="flex flex-col bg-gray-100 border-gray-200 p-4 leading-1.5 dark:bg-gray-700" :class="isSelf(item) ? 'rounded-s-xl rounded-ee-xl' : 'rounded-e-xl rounded-es-xl'">
           <p class="font-normal text-sm text-gray-900 dark:text-white"> {{ getData(item) }}</p>
         </div>
-        <span v-if="false" class="font-normal text-sm text-gray-500 dark:text-gray-400">Delivered</span>
+        <span v-if="item.isPending" class="flex font-normal text-sm text-gray-500 justify-start items-center dark:text-gray-400">
+          <Loading class="h-5 mr-2 w-5" />
+          Pending...
+        </span>
       </div>
     </div>
-    <div class="flex py-10 items-center justify-center" v-show="isLoading">
-      <UIcon name="i-line-md-loading-twotone-loop" class="h-8 w-8" dynamic />
+    <div v-show="isLoading" class="flex py-10 items-center justify-center">
+      <Loading class="h-8 w-8" />
     </div>
   </div>
 </template>

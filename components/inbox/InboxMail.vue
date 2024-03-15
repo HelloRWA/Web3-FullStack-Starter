@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { format, isToday } from 'date-fns'
 import type { Mail } from '~/types'
+import { nextTick } from 'vue'
 
 const { mail } = $defineProps<{
   mail: Mail,
@@ -9,15 +10,34 @@ const { mail } = $defineProps<{
 // load this process data list
 // send msg
 // auto load new message for this process and other process, so we can show last unread message on the left sidebar msg list
-const { sendMessage, loadInboxList } = $(aoStore())
-const { showSuccess } = $(msgStore())
+const { sendMessage, loadInboxList, itemsCache } = $(aoStore())
+const { showSuccess } = $(notificationStore())
+const { address } = $(arweaveWalletStore())
 
+const msgBottom = $ref(null)
 let msg = $ref('')
 let isLoading = $ref(false)
+
+const scrollToBottom = () => {
+  nextTick(() => {
+    msgBottom.scrollIntoView({ behavior: 'smooth' })
+  })
+}
 const doSubmit = async () => {
   if (isLoading) return
   isLoading = true
-  const rz = await sendMessage(mail.id, msg)
+
+  // show pending status
+  itemsCache[mail.id][999999] = {
+    id: 999999,
+    isPending: true,
+    Timestamp: Date.now(),
+    From: address,
+    Data: msg,
+  }
+  scrollToBottom()
+
+  await sendMessage(mail.id, msg)
   showSuccess('Send message successed!')
   isLoading = false
   msg = ''
@@ -35,39 +55,41 @@ defineShortcuts({
 
 <template>
   <UDashboardPanelContent>
-    <div class="flex justify-between">
-      <div class="flex gap-4 items-center">
-        <DicebearAvatar :seed="mail.id" :alt="mail.name" size="lg" />
+    <div class="-m-4 -top-4 z-99 sticky">
+      <div class="bg-background flex  p-4  justify-between  ">
+        <div class="flex gap-4 items-center">
+          <DicebearAvatar :seed="mail.id" :alt="mail.name" size="lg" />
 
-        <div class="min-w-0">
-          <p class="font-semibold text-gray-900 dark:text-white">
-            {{ mail.name }}
-          </p>
-          <p class="font-medium text-gray-500 dark:text-gray-400">
-            {{ mail.id }}
-          </p>
+          <div class="min-w-0">
+            <p class="font-semibold text-gray-900 dark:text-white">
+              {{ mail.name }}
+            </p>
+            <p class="font-medium text-gray-500 dark:text-gray-400">
+              {{ mail.id }}
+            </p>
+          </div>
         </div>
+
+        <p class="font-medium text-gray-900 dark:text-white">
+          {{ isToday(new Date(mail.createdAt)) ? format(new Date(mail.createdAt), 'HH:mm') : format(new Date(mail.createdAt), 'dd MMM') }}
+        </p>
       </div>
 
-      <p class="font-medium text-gray-900 dark:text-white">
-        {{ isToday(new Date(mail.createdAt)) ? format(new Date(mail.createdAt), 'HH:mm') : format(new Date(mail.createdAt), 'dd MMM') }}
-      </p>
+      <UDivider class="" />
     </div>
-
-    <UDivider class="my-5" />
-
+    <div class="my-5"> </div>
     <div class="flex-1">
-      <InboxListMessage :id="mail.id" />
+      <InboxListMessage :id="mail.id" @loaded="scrollToBottom" />
     </div>
-
-    <UDivider class="my-5" />
-
-    <form :disabled="isLoading" @submit.prevent="doSubmit">
-      <UTextarea :disabled="isLoading" v-model="msg" name="msg" color="gray" required size="xl" :rows="5" :placeholder="`Reply to ${mail.name}`">
-        <UIcon v-show="isLoading" name="i-line-md-loading-twotone-loop" class="h-8 top-1/2 left-1/2 w-8 absolute" dynamic />
-        <UButton :disabled="isLoading" type="submit" color="black" label="Send" icon="i-heroicons-paper-airplane" class="right-3.5 bottom-2.5 absolute">
-        </UButton>
-      </UTextarea>
-    </form>
+    <div class="my-5" ref="msgBottom"> </div>
+    <div class="-bottom-4 sticky">
+      <form :disabled="isLoading" @submit.prevent="doSubmit">
+        <UTextarea :disabled="isLoading" v-model="msg" name="msg" color="gray" required size="xl" :rows="5" :placeholder="`Reply to ${mail.name}`">
+          <Loading v-show="isLoading" class="h-8 top-1/2 left-1/2 w-8 absolute" />
+          <UButton :disabled="isLoading" type="submit" color="black" label="Send" icon="i-heroicons-paper-airplane" class="right-3.5 bottom-2.5 absolute">
+          </UButton>
+        </UTextarea>
+      </form>
+    </div>
   </UDashboardPanelContent>
 </template>

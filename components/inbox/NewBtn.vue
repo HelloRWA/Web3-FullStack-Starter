@@ -16,7 +16,7 @@ const validate = (state: any): FormError[] => {
 }
 
 const { add } = $(aoStore())
-const { showError, showSuccess } = $(msgStore())
+const { showError, showSuccess } = $(notificationStore())
 
 async function onSubmit(event: FormSubmitEvent<any>) {
   const { name, pid } = event.data

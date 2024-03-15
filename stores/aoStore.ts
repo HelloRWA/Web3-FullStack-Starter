@@ -12,6 +12,7 @@ import {
 export const aoStore = defineStore('aoStore', () => {
   const itemsCache = $ref({})
   let isInboxLoading = $ref(false)
+  
   const state = $(lsItemRef('aoStore', {}))
   const stateArr = $computed(() => {
     return Object.keys(state).map(id => {
@@ -111,11 +112,10 @@ export const aoStore = defineStore('aoStore', () => {
     isInboxLoading = true
     const cachedIndex = Object.keys(itemsCache[process])
     const allIndex = useRange(1, parseInt(inboxCount) + 1)
-    const waitForReadIndex = useDifference(allIndex, cachedIndex)
-    const waitForReadIndexTrunk = useChunk(waitForReadIndex, limit).reverse()
+    const waitForReadIndex = useDifference(allIndex, cachedIndex).reverse()
+    const waitForReadIndexTrunk = useChunk(waitForReadIndex, limit)
 
     await Promise.all(waitForReadIndexTrunk[0].map(async index => {
-      index = String(index)
       if (itemsCache[process][index]) {
         return itemsCache[process][index]
       }
@@ -128,7 +128,7 @@ export const aoStore = defineStore('aoStore', () => {
             value: process,
           },
           { name: 'Action', value: 'CheckInbox' },
-          { name: 'Index', value: index },
+          { name: 'Index', value:  String(index) },
         ],
       })
       itemsCache[process][index] = {
@@ -138,6 +138,9 @@ export const aoStore = defineStore('aoStore', () => {
 
       return itemsCache[process][index]
     }))
+    if (itemsCache[process][999999]) {
+      delete itemsCache[process][999999]
+    }
     isInboxLoading = false
   }
 
