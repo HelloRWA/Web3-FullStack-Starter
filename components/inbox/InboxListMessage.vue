@@ -1,35 +1,53 @@
 <script setup lang="ts">
 const { id } = $defineProps<{
-  id: string
+  id: string // process id
 }>()
 
-const loaded = defineEmit('loaded')
+import audioFile from '@/assets/notify.mp3'; // Adjust the path accordingly
 
-const { itemsCache, loadInboxList, isInboxLoading: isLoading } = $(aoStore())
+const emitLoaded = defineEmit('loaded')
+
+const { state, itemsCache, loadInboxList, isInboxLoading: isLoading, getInboxCount } = $(aoStore())
 const { address, getActiveAddress } = $(arweaveWalletStore())
 const items = $computed(() => {
   return useSortBy(useFilter(itemsCache[id], item => !!item.Data), item => parseInt(item.index))
 })
 
-watchEffect(async () => {
+const doLoadMore = async () => {
   if (!id) return
 
-  await loadInboxList(id)
-  loaded()
+  await loadInboxList(id, 10)
+  emitLoaded()
+}
+watchEffect(doLoadMore)
+
+
+const playAudio = () => {
+  const audio = new Audio(audioFile);
+  audio.play();
+};
+
+let interval = null
+onMounted(async () => {
+  await getActiveAddress()
+  interval = setInterval(async () => {
+    const oldCount = state[id].inboxCount
+    const newCount = await getInboxCount(id, true)
+    if (oldCount < newCount) {
+      playAudio()
+    }
+  }, 5000)
 })
 
-onMounted(getActiveAddress)
 
+onUnmounted(() => {
+  clearInterval(interval)
+  interval = null
+})
 const isSelf = item => item.From === address
 
 const getData = item => {
   return item.Data
-  const output = useGet(item, 'node.Output.data.output')
-  const data = useGet(item, 'node.Output.data')
-  if (!output) {
-    return data
-  }
-  return output
 }
 
 </script>

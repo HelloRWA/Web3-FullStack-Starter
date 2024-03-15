@@ -104,11 +104,12 @@ export const aoStore = defineStore('aoStore', () => {
   }
 
   const loadInboxList = async (process: string, limit = 10) => {
-    const inboxCount = await getInboxCount(process, true)
     if (!itemsCache[process]) {
       itemsCache[process] = {}
+      await getInboxCount(process, true)
     }
 
+    const { inboxCount } = state[process]
     const cachedIndex = Object.keys(itemsCache[process]).map(item => parseInt(item))
     const allIndex = useRange(1, parseInt(inboxCount) + 1)
     const waitForReadIndex = useDifference(allIndex, cachedIndex).reverse()
