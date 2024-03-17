@@ -6,6 +6,9 @@ export default <Partial<Config>>{
     extend: {
       fontFamily: {
         sans: ['DM Sans', ...defaultTheme.fontFamily.sans]
+      },
+      gridTemplateColumns: {
+        40: 'repeat(40, minmax(0, 1fr))',
       }
     }
   }

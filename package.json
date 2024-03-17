@@ -37,6 +37,7 @@
     "@vue-macros/nuxt": "^1.9.21",
     "arconnect": "^1.0.3",
     "eslint": "^8.57.0",
+    "less": "^4.2.0",
     "nuxt-lodash": "^2.5.3",
     "vue-tsc": "^2.0.6"
   }
