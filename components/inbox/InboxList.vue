@@ -57,15 +57,26 @@ defineShortcuts({
     }
   }
 })
+// @click="selectedMail = mail"
+
+const route = useRoute()
+watchEffect(() => {
+  if (!route.params.pid) return
+
+  const index = props.mails.findIndex((mail) => mail.id === route.params.pid)
+
+  selectedMail.value = props.mails[index]
+})
+
 </script>
 
 <template>
   <UDashboardPanelContent class="p-0">
     <div v-for="(mail, index) in mails" :key="index" :ref="el => { mailsRefs[mail.id] = el as Element }">
-      <div class="cursor-pointer border-l-2 text-sm p-4" :class="[
+      <NuxtLink class="cursor-pointer border-l-2 text-sm p-4 block" :class="[
       mail.unread ? 'text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-300',
       selectedMail && selectedMail.id === mail.id ? 'border-primary-500 dark:border-primary-400 bg-primary-100 dark:bg-primary-900/25' : 'border-white dark:border-gray-900 hover:border-primary-500/25 dark:hover:border-primary-400/25 hover:bg-primary-100/50 dark:hover:bg-primary-900/10'
-    ]" @click="selectedMail = mail">
+    ]" :to="`/inbox/${mail.id}`">
         <div class="flex items-center justify-between" :class="[mail.unread && 'font-semibold']">
           <div class="flex gap-3 items-center">
             {{ mail.name }}
@@ -81,7 +92,7 @@ defineShortcuts({
         <p class="text-gray-400 line-clamp-1 dark:text-gray-500">
           {{ mail.body }}
         </p>
-      </div>
+      </NuxtLink>
 
       <UDivider />
     </div>

@@ -31,7 +31,15 @@ const links = [{
   tooltip: {
     text: 'AO Effect',
     shortcuts: ['G', 'A']
-  }
+  },
+  children: [{
+    label: 'Hall',
+    to: '/ao-effect',
+    exact: true
+  }, {
+    label: 'Ranking',
+    to: '/ao-effect/ranking'
+  }],
 }, {
   id: 'users',
   label: 'Users',

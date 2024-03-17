@@ -2,6 +2,7 @@
 let isShowNewModal = $ref(false)
 const state = reactive({
   name: undefined,
+  checkbox: false,
   // pid: undefined,
   pid: 'BHGZ8J6QAjNcCoKrsB3cZzppRhsOY6lg4XQ-Va7vWNY',
 })
@@ -15,6 +16,7 @@ const validate = (state: any): FormError[] => {
   return errors
 }
 
+const canSubmit = $computed(() => state.name && state.checkbox && state.pid)
 const { add } = $(aoStore())
 const { showError, showSuccess } = $(notificationStore())
 
@@ -40,9 +42,16 @@ async function onSubmit(event: FormSubmitEvent<any>) {
         <UFormGroup label="PID" name="pid">
           <UInput v-model="state.pid" placeholder="Your process id" />
         </UFormGroup>
-        <div class="flex gap-3 justify-end">
+        <UFormGroup name="checkbox" label="">
+          <UCheckbox v-model="state.checkbox" label="I have loaded inbox.lua">
+          </UCheckbox>
+          <div class="text-sm pt-2 pl-7">
+            Instructions: <a href="https://github.com/mayurmarvel/aos-unbox/blob/main/README.md" class="underline" target="_blank">Click Here</a>
+          </div>
+        </UFormGroup>
+        <div class=" flex gap-3 justify-end">
           <UButton label="Cancel" color="gray" variant="ghost" @click="isShowNewModal = false" />
-          <UButton type="submit" label="Save" color="black" />
+          <UButton type="submit" label="Save" color="primary" :disabled="!canSubmit" />
         </div>
       </UForm>
     </UDashboardModal>
