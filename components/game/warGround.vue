@@ -4,6 +4,12 @@ const Board_Size = 40;
 const board = ref(Array(Board_Size * Board_Size).fill(''));
 
 const players = {
+  'U1HFLMW0ZykPip03efMNpUpWcDlzkdxXwtoKZrOzhEA1': {
+    x: 19,
+    y: 20,
+    health: 77,
+    energy: 99,
+  },
   'U1HFLMW0ZykPip03efMNpUpWcDlzkdxXwtoKZrOzhEA2': {
     x: 20,
     y: 20,
@@ -55,7 +61,14 @@ const hasPlayer = index => {
     <div v-for="(chess, index) in board" :key="index" class="bg-green-400 chess-grid">
       <div class="chess-cell">
         <UPopover v-if="hasPlayer(index)" mode="hover">
-          <DicebearAvatar v-for="pid in indexMap[index]" :key="`${index}-${pid}`" :seed="pid" class="rounded-full bg-red-400 h-5 w-5" size="3xl" />
+          <template v-if="indexMap[index].length > 1">
+            <UChip :text="indexMap[index].length" inset size="2xl" color="red">
+              <DicebearAvatar :seed="indexMap[index][0]" class="rounded-full h-8 w-8" size="3xl" />
+            </UChip>
+          </template>
+          <template v-else>
+            <DicebearAvatar v-for="pid in indexMap[index]" :key="`${index}-${pid}`" :seed="pid" class="rounded-full h-8 w-8" size="3xl" />
+          </template>
           <template #panel>
             <div class="flex space-x-5 p-4 justify-center items-center">
               <ULandingCard class="w-80" v-for="pid in indexMap[index]" :title="pid" :key="`${index}-${pid}-detail`" description="Choose a primary and a gray color from your Tailwind CSS color palette. Components will be styled accordingly." color="primary">
@@ -103,8 +116,8 @@ const hasPlayer = index => {
   margin: 0 auto;
 
   .chess-grid {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     // background-color: #f9d16b;
     display: flex;
     justify-content: center;
@@ -116,8 +129,8 @@ const hasPlayer = index => {
     align-items: center;
 
     .chess-cell {
-      width: 20px;
-      height: 20px;
+      width: 32px;
+      height: 32px;
       // border-radius: 50%;
       // background-color: black;
     }
