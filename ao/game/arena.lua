@@ -306,6 +306,7 @@ Handlers.add(
       GameMode = GameMode,
       TimeRemaining = TimeRemaining,
       Players = Players,
+      Waiting = Waiting,
     })
     ao.send({
       Target = Msg.From,

@@ -68,32 +68,6 @@ Handlers.add(
   end
 )
 
--- Handler to trigger game state updates.
-Handlers.add(
-  "GetGameStateOnTick",
-  Handlers.utils.hasMatchingTag("Action", "Tick"),
-  function()
-    if not InAction then -- InAction logic added
-      InAction = true    -- InAction logic added
-      print(colors.gray .. "Getting game state..." .. colors.reset)
-      ao.send({ Target = Game, Action = "GetGameState" })
-    else
-      print("Previous action still in progress. Skipping.")
-    end
-  end
-)
-
--- Handler to automate payment confirmation when waiting period starts.
-Handlers.add(
-  "AutoPay",
-  Handlers.utils.hasMatchingTag("Action", "AutoPay"),
-  function(msg)
-    print("Auto RequestTokens and Transfer confirmation fees.")
-    ao.Send({ Target = Game, Action = "RequestTokens" })
-    ao.send({ Target = Game, Action = "Transfer", Recipient = Game, Quantity = "1000" })
-  end
-)
-
 -- Handler to update the game state upon receiving game state information.
 Handlers.add(
   "UpdateGameState",
@@ -144,5 +118,42 @@ Handlers.add(
     else
       print("Previous action still in progress. Skipping.")
     end
+  end
+)
+
+-- Handler to automate payment confirmation when waiting period starts.
+Handlers.add(
+  "AutoPay",
+  Handlers.utils.hasMatchingTag("Action", "AutoPay"),
+  function(msg)
+    print("Auto RequestTokens and Transfer confirmation fees.")
+    ao.send({ Target = Game, Action = "RequestTokens" })
+    ao.send({ Target = Game, Action = "Transfer", Recipient = Game, Quantity = "1000" })
+  end
+)
+
+-- Handler to trigger game state updates.
+Handlers.add(
+  "GetGameStateOnTick",
+  Handlers.utils.hasMatchingTag("Action", "Tick"),
+  function()
+    if not InAction then -- InAction logic added
+      InAction = true    -- InAction logic added
+      print(colors.gray .. "Getting game state..." .. colors.reset)
+      ao.send({ Target = Game, Action = "GetGameState" })
+    else
+      print("Previous action still in progress. Skipping.")
+    end
+  end
+)
+
+-- ao.send({ Target = ao.id, Action = "Start" })
+Handlers.add(
+  "Start",
+  Handlers.utils.hasMatchingTag("Action", "Start"),
+  function(msg)
+    ao.send({ Target = Game, Action = "Register" })
+    ao.send({ Target = ao.id, Action = "AutoPay" })
+    ao.send({ Target = ao.id, Action = "Tick" })
   end
 )
