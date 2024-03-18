@@ -11,18 +11,26 @@ import {
 
 export const aoStore = defineStore('aoStore', () => {
 
-  const getData = async ({process, action}) => {
+  const getData = async ({process, Action}, tagFilters) => {
      let rz = await dryrun({
         process,
         tags: [
-          { name: 'Action', value: action},
+          { name: 'Action', value: Action},
         ],
      })
-    console.log(`====> rz :`, rz)
     try {
-      rz = JSON.parse(useGet(rz, 'Messages[0].Data'))
+      rz = rz.Messages.filter(msg => {
+        const hasMatchTag = msg.Tags.filter(tag => {
+          if (tagFilters[tag.name]) {
+            return tag.value == tagFilters[tag.name]
+          }
+          return false
+        })
+        return hasMatchTag.length === Object.keys(tagFilters).length
+      })
+      rz = JSON.parse(useGet(rz, '[0].Data'))
     } catch (err) {
-      console.log(`====> err :`, err)
+      console.log(`====> err :`, err, rz)
     }
       
     return rz

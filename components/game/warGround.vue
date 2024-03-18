@@ -5,48 +5,23 @@ const { pid } = $defineProps<{
 }>()
 
 
-const { getGameState } = $(aoEffectStore())
+const { getGameState, state } = $(aoEffectStore())
 
+const players = $computed(() => state[pid]?.players || {})
+let interval = null
 onMounted(async () => {
-  const rz = await getGameState(pid)
-  console.log(`====> rz :`, rz)
+  interval = setInterval(async () => {
+    await getGameState(pid)
+  }, 1500)
 })
-const Board_Size = 40;
+
+onUnmounted(() => {
+  clearInterval(interval)
+})
+
+const Board_Size = 20
 
 const board = ref(Array(Board_Size * Board_Size).fill(''));
-
-const players = {
-  'U1HFLMW0ZykPip03efMNpUpWcDlzkdxXwtoKZrOzhEA1': {
-    x: 19,
-    y: 20,
-    health: 77,
-    energy: 99,
-  },
-  'U1HFLMW0ZykPip03efMNpUpWcDlzkdxXwtoKZrOzhEA2': {
-    x: 20,
-    y: 20,
-    health: 77,
-    energy: 99,
-  },
-  'U1HFLMW0ZykPip03efMNpUpWcDlzkdxXwtoKZrOzhEA3': {
-    x: 20,
-    y: 20,
-    health: 100,
-    energy: 68,
-  },
-  'U1HFLMW0ZykPip03efMNpUpWcDlzkdxXwtoKZrOzhEA': {
-    x: 20,
-    y: 20,
-    health: 100,
-    energy: 0,
-  },
-  'pzYP3kdThp0IrAWY9-SI7I1f-LtbJC_gHG_y-8xfvA': {
-    x: 20,
-    y: 20,
-    health: 100,
-    energy: 0,
-  },
-}
 
 const indexMap = $computed(() => {
   const theMap = {}
@@ -83,7 +58,7 @@ const hasPlayer = index => {
           </template>
           <template #panel>
             <div class="flex space-x-5 p-4 justify-center items-center">
-              <ULandingCard class="w-80" v-for="pid in indexMap[index]" :title="pid" :key="`${index}-${pid}-detail`" description="Choose a primary and a gray color from your Tailwind CSS color palette. Components will be styled accordingly." color="primary">
+              <ULandingCard v-for="pid in indexMap[index]" :key="`${index}-${pid}-detail`" class="w-80" :title="pid" description="Choose a primary and a gray color from your Tailwind CSS color palette. Components will be styled accordingly." color="primary">
                 <template #icon>
                   <div class="flex justify-center">
                     <DicebearAvatar :seed="pid" class="h-20 w-20" size="3xl" />
@@ -91,6 +66,14 @@ const hasPlayer = index => {
                 </template>
                 <template #description>
                   <div class="space-y-5 my-10">
+                    <div class="flex justify-around items-center">
+                      <div>
+                        X: {{ players[pid].x }}
+                      </div>
+                      <div>
+                        Y: {{ players[pid].y }}
+                      </div>
+                    </div>
                     <UMeter :value="players[pid].energy" size="sm" color="cyan">
                       <template #indicator="{ percent }">
                         <div class="text-sm text-right">
@@ -120,7 +103,7 @@ const hasPlayer = index => {
 // credit https: //juejin.cn/post/7343484473184895013?searchId=20240317184254EC834A77FA080C30B454
 .chess-board {
   display: grid;
-  grid-template-columns: repeat(40, 1fr);
+  grid-template-columns: repeat(20, 1fr);
   grid-gap: 1px;
   background-color: #d18b47;
   padding: 8px;
@@ -128,8 +111,8 @@ const hasPlayer = index => {
   margin: 0 auto;
 
   .chess-grid {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     // background-color: #f9d16b;
     display: flex;
     justify-content: center;

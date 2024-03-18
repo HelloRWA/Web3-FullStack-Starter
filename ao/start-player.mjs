@@ -4,9 +4,9 @@ const name = argv._[0]
 
 const params = [
   '--load', './game/bot.lua',
-  '--tag-name Game --tag-value', 'O64tiWxYEkGjbOh4GQ7-DQKSvGYG_Fk5XQ4R5l2PUJ8'
 ]
-$`aos player-${name} ${params}`
-// Game = ''
+$`DEBUG=1 aos player-${name} ${params}`
+// Game = 'MX21hQxvrnPuu7O8ivD82JAKBaArneoHj9YVwjk9rJs'
+// Send({ Target = ao.id, Action = "Start" })
 // Send({ Target = Game, Action = "Register" })
 // Send({ Target = ao.id, Action = "AutoPay" })

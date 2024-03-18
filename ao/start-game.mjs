@@ -6,5 +6,6 @@ const params = [
   '--load', './game/token.lua',
   '--load', './game/arena.lua',
   '--load', './game/ao-effect.lua',
+  '--cron', '5-seconds',
 ]
-$`aos game-${name} ${params}`
+$`DEBUG=1 aos game-rndlsafjds-${name} ${params}`

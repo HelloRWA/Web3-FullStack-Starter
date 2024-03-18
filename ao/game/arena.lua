@@ -130,6 +130,7 @@ function startGamePeriod()
   for player, hasPaid in pairs(Waiting) do
     if hasPaid then
       Players[player] = playerInitState()
+      removeWaiting(player)
     else
       ao.send({
         Target = player,
@@ -209,12 +210,27 @@ function removeListener(listener)
   end
 end
 
+function removeWaiting(player)
+  local idx = 0
+  for i, v in ipairs(Waiting) do
+    if v == player then
+      idx = i
+      break
+    end
+  end
+  if idx > 0 then
+    table.remove(Waiting, idx)
+  end
+end
+
 -- HANDLERS: Game state management
 
 -- Handler for cron messages, manages game state transitions.
 Handlers.add(
   "Game-State-Timers",
+  -- Handlers.utils.hasMatchingTag("Action", "Cron"),
   function(Msg)
+    print(Msg.Data)
     return "continue"
   end,
   function(Msg)

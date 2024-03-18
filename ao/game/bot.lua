@@ -56,7 +56,7 @@ Handlers.add(
   "PrintAnnouncements",
   Handlers.utils.hasMatchingTag("Action", "Announcement"),
   function(msg)
-    if msg.Event == "Started-Waiting-Period" then
+    if (msg.Event == "Started-Waiting-Period" or msg.Event == "Game-Ended") then
       ao.send({ Target = ao.id, Action = "AutoPay" })
     elseif (msg.Event == "Tick" or msg.Event == "Started-Game") and not InAction then
       InAction = true    -- InAction logic added
@@ -148,12 +148,12 @@ Handlers.add(
 )
 
 -- ao.send({ Target = ao.id, Action = "Start" })
+-- ao.send({ Target = ao.id, Action = "Tick" })
 Handlers.add(
   "Start",
   Handlers.utils.hasMatchingTag("Action", "Start"),
   function(msg)
     ao.send({ Target = Game, Action = "Register" })
     ao.send({ Target = ao.id, Action = "AutoPay" })
-    ao.send({ Target = ao.id, Action = "Tick" })
   end
 )

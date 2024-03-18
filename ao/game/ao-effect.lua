@@ -1,8 +1,8 @@
 -- AO EFFECT: Game Mechanics for AO Arena Game
 
 -- Game grid dimensions
-Width = 40  -- Width of the grid
-Height = 40 -- Height of the grid
+Width = 20  -- Width of the grid
+Height = 20 -- Height of the grid
 Range = 1   -- The distance for blast effect
 
 -- Player energy settings
