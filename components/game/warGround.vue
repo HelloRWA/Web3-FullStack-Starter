@@ -1,4 +1,16 @@
 <script setup lang="ts">
+
+const { pid } = $defineProps<{
+  pid: string
+}>()
+
+
+const { getGameState } = $(aoEffectStore())
+
+onMounted(async () => {
+  const rz = await getGameState(pid)
+  console.log(`====> rz :`, rz)
+})
 const Board_Size = 40;
 
 const board = ref(Array(Board_Size * Board_Size).fill(''));

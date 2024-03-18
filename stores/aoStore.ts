@@ -149,7 +149,23 @@ export const aoStore = defineStore('aoStore', () => {
     isInboxLoading = false
   }
 
-  return $$({ state, stateArr, itemsCache, isInboxLoading, add, remove, loadList, loadOne, sendMessage, getInboxCount, loadInboxList})
+  const getData = async ({process, action}) => {
+     let rz = await dryrun({
+        process,
+        tags: [
+          { name: 'Action', value: action},
+        ],
+     })
+    console.log(`====> rz :`, rz)
+    try {
+      rz = JSON.parse(useGet(rz, 'Messages[0].Data'))
+    } catch (err) {
+      console.log(`====> err :`, err)
+    }
+      
+    return rz
+  }
+  return $$({ state, stateArr, itemsCache, isInboxLoading, add, getData, remove, loadList, loadOne, sendMessage, getInboxCount, loadInboxList})
 })
 
 if (import.meta.hot)
