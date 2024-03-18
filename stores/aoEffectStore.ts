@@ -1,6 +1,7 @@
 
 export const aoEffectStore = defineStore('aoEffectStore', () => {
-  const state = $(lsItemRef('aoEffectStore', {}))
+  // const state = $(lsItemRef('aoEffectStore', {}))
+  const state = $ref({})
 
   const { getData } = $(aoStore())
   const getGameState = async (process) => {
@@ -23,9 +24,8 @@ export const aoEffectStore = defineStore('aoEffectStore', () => {
       waiting = rz.Waiting
       // console.log(`====> waiting :`, waiting)
     }
-    timeRemaining = rz.TimeRemaining
-    gameMode = rz.GameMode
-    console.log(`====> timeRemaining, gameMode :`, timeRemaining, gameMode)
+    timeRemaining = rz?.TimeRemaining
+    gameMode = rz?.GameMode
     state[process] = {
       players,
       waiting,

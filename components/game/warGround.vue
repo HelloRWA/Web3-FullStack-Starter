@@ -36,21 +36,25 @@ const indexMap = $computed(() => {
   return theMap
 })
 
-const hasPlayer = index => {
-  if (indexMap[index] && indexMap[index].length > 0) {
-    return true
-  }
-  return false
+const playerLength = index => {
+  if (!indexMap[index]) return 0
+  return indexMap[index]?.length
 }
+
+const firstPlayerId = index => {
+  if (!indexMap[index]) return ''
+  return indexMap[index][0]
+}
+
 </script>
 <template>
   <div class="chess-board">
     <div v-for="(chess, index) in board" :key="index" class="bg-green-400 chess-grid">
       <div class="chess-cell">
-        <UPopover v-if="hasPlayer(index)" mode="hover">
-          <template v-if="indexMap[index].length > 1">
-            <UChip :text="indexMap[index].length" inset size="2xl" color="red">
-              <DicebearAvatar :seed="indexMap[index][0]" class="rounded-full h-8 w-8" size="3xl" />
+        <UPopover v-if="playerLength(index) > 0" mode="hover">
+          <template v-if="playerLength(index) > 1">
+            <UChip :text="playerLength(index)" inset size="2xl" color="red">
+              <DicebearAvatar :seed="firstPlayerId(index)" class="rounded-full h-8 w-8" size="3xl" />
             </UChip>
           </template>
           <template v-else>
@@ -68,10 +72,10 @@ const hasPlayer = index => {
                   <div class="space-y-5 my-10">
                     <div class="flex justify-around items-center">
                       <div>
-                        X: {{ players[pid].x }}
+                        X: {{ players[pid]?.x }}
                       </div>
                       <div>
-                        Y: {{ players[pid].y }}
+                        Y: {{ players[pid]?.y }}
                       </div>
                     </div>
                     <UMeter :value="players[pid].energy" size="sm" color="cyan">
@@ -111,8 +115,8 @@ const hasPlayer = index => {
   margin: 0 auto;
 
   .chess-grid {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     // background-color: #f9d16b;
     display: flex;
     justify-content: center;
