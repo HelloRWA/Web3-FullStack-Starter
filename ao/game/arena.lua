@@ -37,7 +37,8 @@ Now = Now or undefined                -- Current time, updated on every message.
 
 -- Token information for player stakes.
 UNIT = 1000
-PaymentToken = PaymentToken or "ADDR"                 -- Token address
+-- PaymentToken = PaymentToken or "ADDR"                 -- Token address
+PaymentToken = ao.id                                  -- Token address
 PaymentQty = PaymentQty or tostring(math.floor(UNIT)) -- Quantity of tokens for registration
 BonusQty = BonusQty or tostring(math.floor(UNIT))     -- Bonus token quantity for winners
 
