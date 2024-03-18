@@ -49,7 +49,7 @@ async function onSubmit(event: FormSubmitEvent<any>) {
 <template>
   <UDashboardPanelContent class="pb-24">
     <ULandingGrid>
-      <ULandingCard v-for="item in 10" target="_blank" :to="`/game/${item}`" class="col-span-3 row-span-2" icon="i-heroicons-swatch" :title="`Game Name ${item}`" :description="`Game ID ${item}`">
+      <ULandingCard v-for="item in 10" target="_blank" :to="`/game/-sD3eP69UFKnMxxkEBVJxNCPDlbS0mnxZVYauMHJPAg`" class="col-span-3 row-span-2" icon="i-heroicons-swatch" :title="`Game Name ${item}`" :description="`Game ID ${item}`">
         <UProgress />
       </ULandingCard>
     </ULandingGrid>
