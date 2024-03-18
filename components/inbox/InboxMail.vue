@@ -14,7 +14,7 @@ const msgTopIsVisible = useElementVisibility(msgTop)
 // load this process data list
 // send msg
 // auto load new message for this process and other process, so we can show last unread message on the left sidebar msg list
-const { sendMessage, loadInboxList, itemsCache, isInboxLoading } = $(aoStore())
+const { sendMessage, loadInboxList, itemsCache } = $(inboxStore())
 const { showSuccess } = $(notificationStore())
 const { address } = $(arweaveWalletStore())
 

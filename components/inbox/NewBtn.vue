@@ -17,7 +17,7 @@ const validate = (state: any): FormError[] => {
 }
 
 const canSubmit = $computed(() => state.name && state.checkbox && state.pid)
-const { add } = $(aoStore())
+const { add } = $(inboxStore())
 const { showError, showSuccess } = $(notificationStore())
 
 async function onSubmit(event: FormSubmitEvent<any>) {

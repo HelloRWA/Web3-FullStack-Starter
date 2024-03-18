@@ -24,7 +24,7 @@ const dropdownItems = [[{
 
 // const { data: mails } = await useFetch<Mail[]>('/api/mails', { default: () => [] })
 
-const { stateArr: mails } = $(aoStore())
+const { stateArr: mails } = $(inboxStore())
 
 // Filter mails based on the selected tab
 const filteredMails = $computed(() => {
