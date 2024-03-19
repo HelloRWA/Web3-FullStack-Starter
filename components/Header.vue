@@ -9,6 +9,10 @@ const links = [
     to: '/'
   },
   {
+    label: 'Deposit',
+    to: '/deposit'
+  },
+  {
     label: 'Stake',
     to: '/stake'
   },

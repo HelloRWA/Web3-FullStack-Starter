@@ -53,7 +53,7 @@ const firstPlayerId = index => {
 </script>
 <template>
   <div class="chess-board">
-    <div v-for="(chess, index) in board" :key="index" class="bg-green-400 chess-grid">
+    <div v-for="(chess, index) in board" :key="index" class="bg-green-700 chess-grid">
       <div class="chess-cell">
         <UPopover v-if="playerLength(index) > 0" mode="hover">
           <template v-if="playerLength(index) > 1">

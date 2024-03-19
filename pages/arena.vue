@@ -14,10 +14,8 @@ const players = $computed(() => state[pid]?.players || {})
 
 <template>
   <UPage>
-    <div class="h-screen bg-red-400 w-full">
-      <div class="flex h-full bg-green-400 w-full overflow-scroll justify-center items-center">
-        <GameWarGround :pid="pid" />
-      </div>
+    <div class="flex h-screen bg-green-900 flex-1  w-full overflow-scroll justify-center items-center">
+      <GameWarGround :pid="pid" />
     </div>
     <template #right>
       <ClientOnly>
