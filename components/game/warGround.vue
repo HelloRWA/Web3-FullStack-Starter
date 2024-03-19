@@ -8,15 +8,19 @@ const { pid } = $defineProps<{
 const { getGameState, state } = $(aoEffectStore())
 
 const players = $computed(() => state[pid]?.players || {})
-let interval = null
-onMounted(async () => {
-  interval = setInterval(async () => {
+let timeout = null
+const doPull = () => {
+  timeout = setTimeout(async () => {
     await getGameState(pid)
-  }, 1500)
-})
+    doPull()
+  }, 500)
+}
+onMounted(doPull)
 
 onUnmounted(() => {
-  clearInterval(interval)
+  if (timeout) {
+    clearTimeout(timeout)
+  }
 })
 
 const Board_Size = 20

@@ -32,7 +32,7 @@ const players = $computed(() => state[pid]?.players || {})
                 Game Mode: <span class="font-bold">{{ gameMode }}</span>
               </div>
               <div>
-                Time Remaining: <span class="font-bold">{{ timeRemaining }}</span>
+                Time Remaining: <span class="font-bold">{{ parseInt(timeRemaining / 1000) }}</span>
               </div>
               <div class="space-y-5 pt-10">
                 <h2 class="flex font-bold mb-5 justify-between">Playing List <span>Health / Energy</span></h2>
