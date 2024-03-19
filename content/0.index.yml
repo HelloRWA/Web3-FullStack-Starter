@@ -1,5 +1,5 @@
-title: AO Arena Dao
-description: Nuxt UI Pro is a collection of premium Vue components built on top of Nuxt UI to create beautiful & responsive Nuxt applications in minutes.
+title: HOME
+description: AO Arena DAO
 navigation: false
 hero:
   title: Deposit, Stake and Bet
@@ -32,7 +32,7 @@ sections:
         description: You need to have CRED, which is the ao testnet token.
         icon: i-nimbus-money
       - name: Deposit CRED and get $AO
-        description: 1 CRED can swap 100 $AO.
+        description: 1 CRED can swap 1 $AO.
         icon: i-system-uicons-swap
       - name: Stake and Vote
         description: Stake in the Arena, which support the Arena's building, and vote for the proposal

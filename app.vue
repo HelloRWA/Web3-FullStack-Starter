@@ -17,12 +17,13 @@ useHead({
   }
 })
 
-const title = 'Nuxt UI Pro - Dashboard template'
-const description = 'Nuxt UI Pro is a collection of premium Vue components built on top of Nuxt UI to create beautiful & responsive Nuxt applications in minutes.'
+const title = 'AO Arena DAO'
+const description = 'AO Arena DAO.'
 
 useSeoMeta({
   title,
   description,
+  titleTemplate: '%s - AO Arena DAO',
   ogTitle: title,
   ogDescription: description,
   ogImage: 'https://dashboard-template.nuxt.dev/social-card.png',

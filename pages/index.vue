@@ -8,7 +8,6 @@ if (!page.value) {
 }
 
 useSeoMeta({
-  titleTemplate: '',
   title: page.value.title,
   ogTitle: page.value.title,
   description: page.value.description,

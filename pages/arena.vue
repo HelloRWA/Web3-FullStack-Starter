@@ -1,4 +1,7 @@
 <script setup lang="ts">
+useSeoMeta({
+  title: 'Arena'
+})
 
 const pid = $ref('moR8QJPV6NzhsdwibAVoqBoozTXSWqrMROrPFYAgfMs') // 2
 const { state } = $(aoEffectStore())
