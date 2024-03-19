@@ -50,7 +50,7 @@ useSeoMeta({
       </div>
     </ULandingSection>
 
-    <ULandingSection :title="page.features.title" :description="page.features.description">
+    <!-- <ULandingSection :title="page.features.title" :description="page.features.description">
       <UPageGrid>
         <ULandingCard v-for="(item, index) in page.features.items" :key="index" v-bind="item" />
       </UPageGrid>
@@ -66,7 +66,7 @@ useSeoMeta({
 
     <ULandingSection>
       <ULandingCTA v-bind="page.cta" class="bg-gray-100/50 dark:bg-gray-800/50" />
-    </ULandingSection>
+    </ULandingSection> -->
   </div>
 </template>
 
