@@ -1,0 +1,146 @@
+title: AO Arena Dao
+description: Nuxt UI Pro is a collection of premium Vue components built on top of Nuxt UI to create beautiful & responsive Nuxt applications in minutes.
+navigation: false
+hero:
+  title: Stake AO and earn $AO
+  description: You will stake your CRED and get $AO, which can bet your AO
+  headline:
+    label: Made with AO Computer
+    to: https://ao.arweave.dev/
+    icon: i-heroicons-arrow-top-right-on-square-20-solid
+  links:
+    - label: Stake Now
+      to: "/stake"
+      size: xl
+      color: primary
+      icon: i-icon-park-deposit
+      trailing: true
+    - label: Watch on the arena
+      icon: i-icon-park-twotone-arena
+      size: xl
+      color: gray
+      to: /arena
+      target: _blank
+sections:
+  - title: Stake on your AO
+    description: AO here means one of our two tigers, we use AO to stand for them.
+    id: features
+    align: left
+    img: https://plus.unsplash.com/premium_photo-1664298515793-1451ed489d95?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Njl8fHRpZ2VyfGVufDB8fDB8fHww
+    features:
+      - name: Get some CRED
+        description: You need to have CRED, which is the ao testnet token.
+        icon: i-nimbus-money
+      - name: Deposit CRED and get $AO
+        description: 1 CRED can swap 1000 $AO.
+        icon: i-system-uicons-swap
+      - name: Dice and Stake!
+        description: Stake on the RED or BLUE Tiger which you bet it will win in the arena.
+        icon: i-fluent-emoji-high-contrast-game-die
+    links:
+      - label: Stake now!
+        to: /stake
+        color: primary
+        icon: i-icon-park-deposit
+        trailing: true
+        size: md
+        class: ml-8
+  - title: Watch on the Arena
+    description: The arena is the place which the Two AOs(Tigers) fight to each other.
+    align: right
+    img: https://images.unsplash.com/photo-1660518909674-fe2e822ed40e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGlnZXIlMjBhcmVuYXxlbnwwfHwwfHx8MA%3D%3D
+    features:
+      - name: AO bot process
+        description: They are two AO bot process, which have a bit of Artificial intelligence, in the near feature, we will connect with ChatGPT / LLM to provide more power Strategic Decicions
+        icon: i-ic-twotone-android
+      - name: Decentralized
+        description: It get the game and players state from the AO computer, which is Decentralized Computer!
+        icon: i-eos-icons-blockchain
+      - name: Scalable
+        description: Lorem deserunt et eiusmod. Ea in consectetur minim officia.
+        icon: i-heroicons-chart-bar
+    links:
+      - label: Head to Arena
+        to: /arena
+        color: gray
+        icon: i-icon-park-twotone-arena
+        trailing: true
+        size: md
+        class: ml-8
+features:
+  title: Why choose our service?
+  description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  items:
+    - title: Easy to use
+      description: Id laborum laboris duis nostrud excepteur ut velit nulla magna Lorem proident non.
+      icon: i-heroicons-cog
+    - title: Reliable
+      description: Magna Lorem ex cillum fugiat ad enim aute irure sit duis minim.
+      icon: i-heroicons-check
+    - title: Secure
+      description: Proident nostrud excepteur sint ut culpa consectetur aute adipisicing non anim ullamco.
+      icon: i-heroicons-lock-closed
+    - title: Fast
+      description: Qui reprehenderit nostrud dolore nisi ad fugiat labore eiusmod sint aliquip nisi voluptate.
+      icon: i-heroicons-rocket-launch
+    - title: Affordable
+      description: Reprehenderit fugiat elit in do ipsum ut pariatur.
+      icon: i-heroicons-currency-dollar
+    - title: Scalable
+      description: Lorem deserunt et eiusmod. Ea in consectetur minim officia ullamco enim deserunt est.
+      icon: i-heroicons-chart-bar
+testimonials:
+  headline: Testimonials
+  title: What our customers are saying.
+  description: Proident sunt exercitation minim laborum enim laboris labore esse.
+  items:
+    - quote: Nostrud tempor sunt fugiat. Dolor in sint dolore labore non occaecat adipisicing Lorem labore ullamco enim excepteur. In fugiat Lorem sit velit id veniam esse eiusmod non ea voluptate cupidatat reprehenderit ullamco dolore. Mollit laborum occaecat aliquip.
+      author:
+        name: Rose Roberson
+        description: CEO at Company
+        avatar:
+          src: https://i.pravatar.cc/120?img=1
+          loading: lazy
+    - quote: Eiusmod dolor aute ut nulla pariatur officia consequat aute amet exercitation.
+      author:
+        name: Chace Rodgers
+        description: CEO at Company
+        avatar:
+          src: https://i.pravatar.cc/120?img=7
+          loading: lazy
+    - quote: Id duis velit enim officia ad nisi incididunt magna ex dolor minim deserunt dolor. Esse incididunt cillum nostrud esse do quis amet labore amet nulla eiusmod amet nulla Lorem. Incididunt ex voluptate irure officia laboris ea proident est qui.
+      author:
+        name: Cornelius Sheppard
+        description: CEO at Company
+        avatar:
+          src: https://i.pravatar.cc/120?img=3
+          loading: lazy
+    - quote: Velit consectetur in adipisicing culpa eiusmod commodo eu ex dolore. Officia irure nisi dolor dolore velit fugiat. Aliqua sint aliqua aute elit eu sunt.
+      author:
+        name: Destinee Woods
+        description: CEO at Company
+        avatar:
+          src: https://i.pravatar.cc/120?img=5
+          loading: lazy
+    - quote: Proident quis deserunt qui ex exercitation veniam id Lorem est cupidatat ipsum irure aliquip ad.
+      author:
+        name: Kaleb Mccormick
+        description: CEO at Company
+        avatar:
+          src: https://i.pravatar.cc/120?img=8
+          loading: lazy
+    - quote: Magna officia quis ea ea in officia non voluptate ipsum culpa do labore sunt. Aute est dolore commodo sint officia ad laboris dolor magna aliquip exercitation tempor commodo.
+      author:
+        name: Jazmin Mccall
+        description: CEO at Company
+        avatar:
+          src: https://i.pravatar.cc/120?img=9
+          loading: lazy
+cta:
+  title: Get started today
+  description: Nisi mollit id aliquip sunt est laborum sit sit.
+  links:
+    - label: Buy now
+      size: xl
+      color: black
+      to: /pricing

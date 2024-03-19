@@ -2,6 +2,9 @@
 export default defineNuxtConfig({
   extends: [process.env.NUXT_UI_PRO_PATH || '@nuxt/ui-pro'],
   modules: [
+    '@nuxt/content',
+    '@nuxt/image',
+    'nuxt-og-image',
     '@nuxt/ui',
     'nuxt-lodash',
     '@nuxt/fonts',
