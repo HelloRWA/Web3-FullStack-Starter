@@ -87,7 +87,7 @@ User can add process, and send / receive the process's new message
 ## Quick Start
 
 ```bash [Terminal]
-npx nuxi init -t github:nuxt-ui-pro/dashboard
+git clone git@github.com:HelloRWA/Web3-FullStack-Starter.git
 ```
 
 ## Setup
@@ -161,7 +161,3 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
-
-## Renovate integration
-
-Install [Renovate GitHub app](https://github.com/apps/renovate/installations/select_target) on your repository and you are good to go.
