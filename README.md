@@ -1,3 +1,27 @@
+# AO Area DAO
+
+It was fascinating when I first saw the [AO Launch Video](https://twitter.com/aoTheComputer/status/1762545634035290465).
+
+Then I spend most of my time studying and trying AO.
+
+Also, make the [Awesome AO](https://github.com/HelloRWA/awesome-ao).
+
+During the weave hackathon, I first built the Inbox UI for track 1(Build a Fullstack Permaweb App), then built the game UI to reading && pull data from the ao arena for track 3(Build a Graphical User Interface for ao-Effect). Finally, come to the Track 4 task(The MemeFrame Championship).
+
+Then I found I could combine all of them into one: `AO Arena DAO`.
+
+1. User deposit CRED to get $AO Coin
+2. User stake $AO Coin to the Arena, earn 10% profit share, vote for proposal in the DAO
+3. User Bet on the players, once the side you bet on wins, you get the reward $AO Coin(Which comes from the failure side)
+4. Arena takes 10% as the game fee, and 10% of the game fee share to all the stakers.
+5. User can watch the players' moving and fighting on the `/arena`, which reads the data from the arena process
+
+
+## Links
+
+
+
+
 ## Features
 
 ### Inbox
@@ -10,7 +34,6 @@ User can add process, and send / receive the process's new message
 * [x] send message to process
 * [x] playsound while new message arrived (interval with 5 seconds)
 * [x] load more while scroll to top(which will load older msg)
-
 
 ### ao-Effect
 

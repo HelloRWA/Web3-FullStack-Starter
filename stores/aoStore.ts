@@ -37,7 +37,7 @@ export const aoStore = defineStore('aoStore', () => {
     await window.arweaveWallet.connect(permissions)
     try {
       address = await window.arweaveWallet.getActiveAddress()
-      credBalance = await getBalance()
+      await init()
     } catch(error) {
       console.error(error)
     }

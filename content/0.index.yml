@@ -20,7 +20,6 @@ hero:
       size: xl
       color: gray
       to: /arena
-      target: _blank
 sections:
   - title: Stake in the Arena
     description: Stake your $AO in the Arena, then you can vote for the proposal and get profit share from Arena.
