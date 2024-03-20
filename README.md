@@ -1,4 +1,4 @@
-![AO Arena DAO](./screenshots/home.png)
+![AO Arena DAO](./public/screenshots/home.png)
 
 # AO Arena DAO
 
@@ -34,7 +34,7 @@ Then I found I could combine all of them into one: `AO Arena DAO`.
 
 ## Features
 
-![Deposit](./screenshots/deposit.png)
+![Deposit](./public/screenshots/deposit.png)
 
 ### Deposit
 
@@ -43,7 +43,7 @@ Then I found I could combine all of them into one: `AO Arena DAO`.
 * [x] Make a [deposit service process](https://github.com/HelloRWA/Web3-FullStack-Starter/blob/main/ao/game/deposit.lua) to support this
 * [] `WIP` Make a `Deposit Activity` List
 
-![Stake](./screenshots/stake.png)
+![Stake](./public/screenshots/stake.png)
 
 ### Stake
 
@@ -52,7 +52,7 @@ Then I found I could combine all of them into one: `AO Arena DAO`.
 * [ ] `WIP` Make a `Stake Activity` List
 * [ ] `WIP` User can vote for arena proposal
 
-![Arena](./screenshots/arena.png)
+![Arena](./public/screenshots/arena.png)
 
 ### Arena
 
@@ -62,7 +62,7 @@ Then I found I could combine all of them into one: `AO Arena DAO`.
 * [ ] `WIP` User can burn $AO token to own their Arena and get profit by operating their own Arena
 * [ ] `WIP` User can burn $AO token to own their bot player
 
-![Chat](./screenshots/chat.png)
+![Chat](./public/screenshots/chat.png)
 
 ### Chat
 
