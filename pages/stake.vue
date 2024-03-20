@@ -18,8 +18,6 @@ const round1StakeAmount = $ref(500)
 <template>
   <UPage>
     <UContainer>
-      <!-- <StakeStep class="my-20" /> -->
-
       <UPageHero id="stake" class="mt-20" title="Stake in the Arena and Earn" description="Arena get 10% of the total Bet $AO as fee for every round of the game. All the stakers share the profit. Stakers also have the vote right for Arena's new proposal" align="center">
       </UPageHero>
 
@@ -37,7 +35,7 @@ const round1StakeAmount = $ref(500)
         </UPricingCard>
       </UPageHero>
 
-      <StakeUserActivityList class="my-20" />
+      <UserActivityList class="my-20" title="Stake Activity(TODO)" />
     </UContainer>
   </UPage>
 </template>

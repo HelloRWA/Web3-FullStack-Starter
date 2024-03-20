@@ -1,4 +1,7 @@
 <script setup lang="ts">
+const props = defineProps<{
+  title: any
+}>()
 const columns = [{
   key: 'id',
   label: 'ID'
@@ -56,19 +59,22 @@ const items = [{
 const pending = $ref(false)
 </script>
 <template>
-  <UTable :columns="columns" :rows="items" :loading="pending" :loading-state="{ icon: 'i-heroicons-arrow-path-20-solid', label: 'Loading...' }" class="w-full">
-    <template #name-data="{ row }">
-      <div class="flex items-center">
-        <UAvatar size="sm" :src="row.avatar" :alt="row.name" class="mr-2" />
-        {{ row.name }}
-      </div>
-    </template>
-    <template #link-data="{ row }">
-      <a :href="row.link" class="truncate hover:text-primary" target="_blank">{{ row.link }}</a>
-    </template>
+  <div>
+    <h2> {{ title }}</h2>
+    <UTable :columns="columns" :rows="items" :loading="pending" :loading-state="{ icon: 'i-heroicons-arrow-path-20-solid', label: 'Loading...' }" class="w-full">
+      <template #name-data="{ row }">
+        <div class="flex items-center">
+          <UAvatar size="sm" :src="row.avatar" :alt="row.name" class="mr-2" />
+          {{ row.name }}
+        </div>
+      </template>
+      <template #link-data="{ row }">
+        <a :href="row.link" class="truncate hover:text-primary" target="_blank">{{ row.link }}</a>
+      </template>
 
-    <template #created_at-data="{ row }">
-      <TimeAgo :time="row.created_at" />
-    </template>
-  </UTable>
+      <template #created_at-data="{ row }">
+        <TimeAgo :time="row.created_at" />
+      </template>
+    </UTable>
+  </div>
 </template>

@@ -11,7 +11,12 @@ const players = $computed(() => state[pid]?.players || {})
 let timeout = null
 const doPull = () => {
   timeout = setTimeout(async () => {
-    await getGameState(pid)
+    try {
+      await getGameState(pid)
+    } catch (err) {
+      console.log(`====> err :`, err)
+    }
+
     doPull()
   }, 500)
 }
