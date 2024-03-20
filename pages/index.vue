@@ -14,11 +14,25 @@ useSeoMeta({
   description: page.value.description,
   ogDescription: page.value.description
 })
+
+
+const audioRef = ref()
+
+let isLoading = $ref(false)
+const playSound = async () => {
+  isLoading = true
+  audioRef.value?.play()
+  setTimeout(() => {
+    navigateTo('/deposit')
+    isLoading = false
+  }, 2000);
+}
+
 </script>
 
 <template>
   <div v-if="page">
-    <ULandingHero :title="page.hero.title" :description="page.hero.description" :links="page.hero.links">
+    <ULandingHero :title="page.hero.title" :description="page.hero.description" :links2="page.hero.links">
       <div class="inset-0 z-[-1] absolute landing-grid [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]" />
 
       <template #headline>
@@ -31,6 +45,12 @@ useSeoMeta({
 
           <UIcon v-if="page.hero.headline.icon" :name="page.hero.headline.icon" class="h-4 ml-1 w-4 pointer-events-none" />
         </UBadge>
+      </template>
+      <template #links>
+        <div class="flex flex-wrap mt-10 gap-x-6 gap-y-3 justify-center">
+          <UButton v-bind="page.hero.links[0]" @click="playSound" :loading="isLoading" />
+          <UButton v-bind="page.hero.links[1]" />
+        </div>
       </template>
     </ULandingHero>
 
@@ -67,6 +87,9 @@ useSeoMeta({
     <ULandingSection>
       <ULandingCTA v-bind="page.cta" class="bg-gray-100/50 dark:bg-gray-800/50" />
     </ULandingSection> -->
+    <audio ref="audioRef" src="/tiger.mp3" hidden="true" preload="true">
+      <a href="/tiger.mp3"> Download audio </a>
+    </audio>
   </div>
 </template>
 
