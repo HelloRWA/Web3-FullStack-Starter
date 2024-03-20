@@ -31,7 +31,7 @@ GameMode = GameMode or "Not-Started"
 StateChangeTime = StateChangeTime or undefined
 
 -- State durations (in milliseconds)
-WaitTime = WaitTime or 2 * 60 * 1000  -- 2 minutes
+WaitTime = WaitTime or 20 * 60 * 1000 -- 2 minutes
 GameTime = GameTime or 20 * 60 * 1000 -- 20 minutes
 Now = Now or undefined                -- Current time, updated on every message.
 
@@ -41,6 +41,16 @@ UNIT = 1000
 PaymentToken = ao.id                                  -- Token address
 PaymentQty = PaymentQty or tostring(math.floor(UNIT)) -- Quantity of tokens for registration
 BonusQty = BonusQty or tostring(math.floor(UNIT))     -- Bonus token quantity for winners
+
+-- Deposit, Stake and Bet
+BetOnTotalAmount = BetOnTotalAmount or 0
+BetOnList = BetOnList or {}
+BetOnAmountList = BetOnAmountList or {}
+-- BetToken = BetToken or 'Undefined' -- must provid the BetToken Address, here we are $AO token
+BetToken = BetToken or 'rxl5oOyCuzrUUVB1edjrcHpcn9s9czhj4rsq4ACQGv4'
+BetTokenMin = tostring(math.floor(UNIT * 100))
+StakeTotalAmount = StakeTotalAmount or 0
+StakeAmountList = StakeAmountList or {}
 
 -- Players waiting to join the next game and their payment status.
 Waiting = Waiting or {}
@@ -130,7 +140,7 @@ function startGamePeriod()
   for player, hasPaid in pairs(Waiting) do
     if hasPaid then
       Players[player] = playerInitState()
-      removeWaiting(player)
+      Waiting[player] = nil
     else
       ao.send({
         Target = player,
@@ -184,12 +194,19 @@ function endGame()
 
   Winnings = tonumber(BonusQty) / Winners
 
+  local betOnTotalRewardAfterTax = BetOnTotalAmount * 9 / 10
+  local betOnReward = betOnTotalRewardAfterTax / Winners
   for player, _ in pairs(Players) do
     -- addLog("EndGame", "Sending reward of:".. Winnings + PaymentQty .. "to player: " .. player) -- Useful for tracking rewards
     sendReward(player, Winnings + tonumber(PaymentQty), "Win")
-    Waiting[player] = false
+    -- Waiting[player] = false
+    -- TODO: calc player's better's reward
+
+    sendBetOnReward(player, betOnReward)
   end
 
+  sendStakeProfitShare(BetOnTotalAmount - betOnTotalRewardAfterTax)
+  BetOnTotalAmount = 0
   Players = {}
   announce("Game-Ended", "Congratulations! The game has ended. Remaining players at conclusion: " .. Winners .. ".")
   startWaitingPeriod()
@@ -207,19 +224,6 @@ function removeListener(listener)
   end
   if idx > 0 then
     table.remove(Listeners, idx)
-  end
-end
-
-function removeWaiting(player)
-  local idx = 0
-  for i, v in ipairs(Waiting) do
-    if v == player then
-      idx = i
-      break
-    end
-  end
-  if idx > 0 then
-    table.remove(Waiting, idx)
   end
 end
 
@@ -324,6 +328,9 @@ Handlers.add(
       TimeRemaining = TimeRemaining,
       Players = Players,
       Waiting = Waiting,
+      BetOnList = BetOnList,
+      BetOnAmountList = BetOnAmountList,
+      BetOnTotalAmount = BetOnTotalAmount
     })
     ao.send({
       Target = Msg.From,
@@ -358,6 +365,121 @@ Handlers.add(
       Action = "Transfer",
       Quantity = tostring(math.floor(10000 * UNIT)),
       Recipient = Msg.From,
+    })
+  end
+)
+
+
+Handlers.add(
+  "BetTransfer",
+  function(Msg)
+    return
+        Msg.Action == "Credit-Notice" and
+        Msg.BetOn ~= nil and
+        Msg.From == BetToken and "continue"
+    -- tonumber(Msg.Quantity) >= tonumber(BetTokenMin) and "continue"
+  end,
+  function(Msg)
+    print('Beton ' .. Msg.BetOn)
+    local amount = tonumber(Msg.Quantity)
+    ao.send({
+      Target = Msg.Sender,
+      Action = "Bet-Received",
+      Data = Msg.Quantity,
+      BetOn = Msg.BetOn
+    })
+    BetOnTotalAmount = BetOnTotalAmount + amount
+    BetOnAmountList[Msg.BetOn] = BetOnAmountList[Msg.BetOn] or 0
+    BetOnAmountList[Msg.BetOn] = BetOnAmountList[Msg.BetOn] + amount
+
+    BetOnList[Msg.BetOn] = BetOnList[Msg.BetOn] or {}
+    BetOnList[Msg.BetOn][Msg.Sender] = BetOnList[Msg.BetOn][Msg.Sender] or 0
+    BetOnList[Msg.BetOn][Msg.Sender] = BetOnList[Msg.BetOn][Msg.Sender] + amount
+
+    announce("Bet-Received", Msg.Sender .. " Bet " .. Msg.Quantity .. " $AO on " .. Msg.BetOn)
+  end
+)
+
+function sendBetOnReward(player, totalBetOnReward)
+  local amount = BetOnAmountList[player] or 0
+  if (amount == 0) then
+    return
+  end
+  for user, betQuantity in ipairs(BetOnList[player]) do
+    local reward = (betQuantity / amount) * totalBetOnReward
+    ao.send({
+      Target = BetToken,
+      Action = "Transfer",
+      Quantity = tostring(reward),
+      Recipient = user,
+      Reason = 'Bet on reward'
+    })
+    BetOnList[player][user] = 0
+  end
+
+  BetOnList[player] = {}
+  BetOnAmountList[player] = 0
+end
+
+Handlers.add(
+  "StakeTransfer",
+  function(Msg)
+    return
+        Msg.Action == "Credit-Notice" and
+        Msg.Stake ~= nil and
+        Msg.From == BetToken and "continue"
+  end,
+  function(Msg)
+    print(Msg)
+    local amount = tonumber(Msg.Quantity)
+    ao.send({
+      Target = Msg.Sender,
+      Action = "Stake-Received",
+      Data = Msg.Quantity,
+    })
+    StakeTotalAmount = StakeTotalAmount + amount
+    StakeAmountList[Msg.Sender] = StakeAmountList[Msg.Sender] or 0
+    StakeAmountList[Msg.Sender] = StakeAmountList[Msg.Sender] + amount
+
+    announce("Stake-Received", Msg.Sender .. " Stake " .. Msg.Quantity .. " $AO in Arena")
+  end
+)
+
+function sendStakeProfitShare(amount)
+  amount = amount / 10 -- share 10% profit for current round
+  for user, quantity in ipairs(StakeAmountList) do
+    local profit = (quantity / StakeTotalAmount) * amount
+    ao.send({
+      Target = BetToken,
+      Action = "Transfer",
+      Quantity = tostring(profit),
+      Recipient = user,
+      Reason = 'Stake profit share'
+    })
+  end
+end
+
+Handlers.add(
+  "getStakeTotalAmount",
+  Handlers.utils.hasMatchingTag("Action", "getStakeTotalAmount"),
+  function(msg)
+    ao.send({
+      Target = msg.From,
+      Action = 'getStakeTotalAmount',
+      Data = StakeTotalAmount
+    })
+  end
+)
+
+Handlers.add(
+  "getStakeAmountByUser",
+  Handlers.utils.hasMatchingTag("Action", "getStakeAmountByUser"),
+  function(msg)
+    StakeAmountList[msg.From] = StakeAmountList[msg.From] or 0
+    ao.send({
+      Target = msg.From,
+      Action = 'getStakeAmountByUser',
+      Data = StakeAmountList[msg.From]
     })
   end
 )
