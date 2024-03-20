@@ -24,7 +24,7 @@ export const aoStore = defineStore('aoStore', () => {
   const tokenMap = $ref({
     CRED: 'Sa0iBLPNyJQrwpTTG-tWLQU-1QeUAJA73DdxGGiKoJc',
     AOCoin: 'rxl5oOyCuzrUUVB1edjrcHpcn9s9czhj4rsq4ACQGv4',
-    Arena: 'moR8QJPV6NzhsdwibAVoqBoozTXSWqrMROrPFYAgfMs',
+    Arena: 'uLPuyonDbrhNMwL9UA04H9H4dLLE9iPdE0ESAjrWAqs',
     DepositService: 'kzcVZhdcZOpM90eeKb-JRX3AG7TGH__S7p5I6PsqA3g'
   })
   
@@ -135,9 +135,9 @@ export const aoStore = defineStore('aoStore', () => {
         message: rz,
         process,
       })
-      const error = useGet(rz, 'Messages[0].Tags').find((tag: Tag) => tag.name === 'Error').value
+      const error = useGet(rz, 'Messages[0].Tags').find((tag: Tag) => tag.name === 'Error')
       if (error) {
-        showError(error)
+        showError(error.value)
         return false
       }
       rz = useGet(rz, 'Messages[0].Tags').find((tag: Tag) => tag.name === 'Action').value

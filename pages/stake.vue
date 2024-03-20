@@ -36,7 +36,7 @@ const doSubmit = async () => {
 
   const rz = await sendToken('AOCoin', arenaPID, round1StakeAmount, [{ name: 'Stake', value: arenaPID }])
   if (rz) {
-    showSuccess('Stake successed, refreshing...')
+    showSuccess('Stake succeed, refreshing...')
     await doInit()
   }
   loading = false

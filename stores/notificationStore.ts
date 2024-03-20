@@ -4,7 +4,7 @@ export const notificationStore = defineStore('notificationStore', () => {
     toast.add({ title: 'Error', description, icon: 'i-heroicons-x-circle-16-solid', color: 'red' })
   }
   const showSuccess = description => {
-    toast.add({ title: 'Successed', description, icon: 'i-heroicons-check-circle', color: 'green' })
+    toast.add({ title: 'succeed', description, icon: 'i-heroicons-check-circle', color: 'green' })
   }
 
   return $$({ showError, showSuccess })

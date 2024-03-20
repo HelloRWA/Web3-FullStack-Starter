@@ -21,7 +21,7 @@ const doDeposit = async () => {
 
   const rz = await sendToken('CRED', depositPID, credPay)
   if (rz) {
-    showSuccess('Deposit successed, refreshing balance')
+    showSuccess('Deposit succeed, refreshing balance')
     await init()
   }
   loading = false

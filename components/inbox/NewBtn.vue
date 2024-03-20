@@ -28,7 +28,7 @@ async function onSubmit(event: FormSubmitEvent<any>) {
     return
   }
   isShowNewModal = false
-  showSuccess('Add successed')
+  showSuccess('Add succeed')
 }
 </script>
 <template>

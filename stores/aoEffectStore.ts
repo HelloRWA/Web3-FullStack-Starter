@@ -14,6 +14,9 @@ export const aoEffectStore = defineStore('aoEffectStore', () => {
     let waiting = {}
     let timeRemaining = 0
     let gameMode = ''
+    let betOnTotalAmount = 0
+    let betOnAmountList = {}
+    let betOnList = {}
 
     if (Object.keys(rz.Players).length > 0) {
       players = rz.Players
@@ -26,11 +29,18 @@ export const aoEffectStore = defineStore('aoEffectStore', () => {
     }
     timeRemaining = rz?.TimeRemaining
     gameMode = rz?.GameMode
+    betOnTotalAmount = rz?.BetOnTotalAmount
+    betOnAmountList = rz?.BetOnAmountList
+    betOnList = rz?.betOnList
+    console.log(`====> betOnTotalAmount :`, betOnTotalAmount)
     state[process] = {
       players,
       waiting,
       timeRemaining,
       gameMode,
+      betOnTotalAmount,
+      betOnAmountList,
+      betOnList
     }
   }
 

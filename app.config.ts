@@ -11,7 +11,7 @@ export default defineAppConfig({
       dynamic: true
     },
     notifications: {
-      position: 'top-0 bottom-auto'
+      position: 'left-0'
     }
   }
 })

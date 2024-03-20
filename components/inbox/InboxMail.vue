@@ -44,7 +44,7 @@ const doSubmit = async () => {
   scrollToBottom()
 
   await sendMessage(mail.id, msg)
-  showSuccess('Send message successed!')
+  showSuccess('Send message succeed!')
   isLoading = false
   msg = ''
   await loadInboxList(mail.id)

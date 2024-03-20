@@ -20,6 +20,10 @@ const links = [
     label: 'Arena',
     to: '/arena'
   },
+  {
+    label: 'Chat',
+    to: '/chat'
+  },
   // {
   //   label: 'About',
   //   to: '/about'
