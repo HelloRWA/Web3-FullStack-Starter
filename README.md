@@ -1,4 +1,6 @@
-# AO Area DAO
+![AO Arena DAO](./screenshots/home.png)
+
+# AO Arena DAO
 
 It was fascinating when I first saw the [AO Launch Video](https://twitter.com/aoTheComputer/status/1762545634035290465).
 
@@ -29,7 +31,7 @@ Then I found I could combine all of them into one: `AO Arena DAO`.
 
 ## Features
 
-### Inbox
+### Chat
 
 User can add process, and send / receive the process's new message
 
@@ -52,7 +54,6 @@ User can add process, and send / receive the process's new message
   * Dice Bear Avatars : [click here](https://www.dicebear.com/styles/bottts-neutral/)
 
 
-![nuxt-ui-dashboard-social-card](https://github.com/nuxt-ui-pro/dashboard/assets/739984/f785284b-7db2-4732-af0e-2cb3c0bd7ca2)
 
 # Nuxt UI Pro - Dashboard template
 

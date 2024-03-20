@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import type { Mail } from '~/types'
 
+useSeoMeta({
+  title: 'AO Chat'
+})
+
 const tabItems = [{
   label: 'All'
 }, {
@@ -128,7 +132,7 @@ watchEffect(() => {
               </template>
             </UDashboardNavbar>
 
-            <InboxMail :mail="selectedMail" />
+            <InboxMail :mail="selectedMail" class="mt-10" />
           </div>
           <UMain v-else class="flex-1 hidden items-center justify-center lg:flex">
             <UIcon name="i-heroicons-inbox" class="h-32 text-gray-400 w-32 dark:text-gray-500" />

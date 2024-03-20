@@ -16,8 +16,9 @@ const doPull = () => {
     } catch (err) {
       console.log(`====> err :`, err)
     }
-
-    doPull()
+    if (timeout) {
+      doPull()
+    }
   }, 500)
 }
 onMounted(doPull)

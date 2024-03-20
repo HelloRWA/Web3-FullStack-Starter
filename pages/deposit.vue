@@ -1,6 +1,6 @@
 <script setup lang="ts">
 useSeoMeta({
-  title: 'Stake'
+  title: 'Deposit'
 })
 
 const credSwap = $ref(0.1)
