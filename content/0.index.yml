@@ -9,8 +9,8 @@ hero:
     to: https://ao.arweave.dev/
     icon: i-heroicons-arrow-top-right-on-square-20-solid
   links:
-    - label: Stake Now
-      to: "/stake"
+    - label: Deposit Now
+      to: "/deposit"
       size: xl
       color: primary
       icon: i-icon-park-deposit

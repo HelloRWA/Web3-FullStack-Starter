@@ -1,6 +1,7 @@
 <script setup lang="ts">
 definePageMeta({
-  colorMode: 'dark'
+  colorMode: 'dark',
+  layout: 'home'
 })
 const { data: page } = await useAsyncData('index', () => queryContent('/').findOne())
 if (!page.value) {

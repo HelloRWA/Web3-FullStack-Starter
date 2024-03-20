@@ -103,7 +103,7 @@ const seconds = $computed(() => parseInt(timeRemaining / 1000 % 60))
                   </div>
                 </div>
               </div>
-              <div v-if="waiting.length > 0" class="space-y-5 pt-10">
+              <div v-if="Object.keys(waiting).length > 0" class="space-y-5 pt-10">
                 <div class="flex font-bold mb-5">
                   Waiting List
                 </div>

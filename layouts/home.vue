@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const appConfig = useAppConfig()
-appConfig.ui.gray = 'cool'
+appConfig.ui.gray = 'green'
 </script>
 
 <template>

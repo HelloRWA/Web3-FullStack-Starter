@@ -48,9 +48,16 @@ const isMailPanelOpen = computed({
   }
 })
 
+const route = useRoute()
 watchEffect(() => {
   if (!filteredMails?.find(mail => mail.id === selectedMail?.id)) {
     selectedMail = null
+  }
+
+  if (!route.params.pid) {
+    if (mails.length > 0) {
+      navigateTo(`/chat/${mails[0].id}`)
+    }
   }
 })
 
