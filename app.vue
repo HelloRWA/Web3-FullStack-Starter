@@ -26,8 +26,8 @@ useSeoMeta({
   titleTemplate: '%s - AO Arena DAO',
   ogTitle: title,
   ogDescription: description,
-  ogImage: 'https://dashboard-template.nuxt.dev/social-card.png',
-  twitterImage: 'https://dashboard-template.nuxt.dev/social-card.png',
+  ogImage: 'https://github.com/HelloRWA/Web3-FullStack-Starter/raw/main/screenshots/home.png',
+  twitterImage: 'https://github.com/HelloRWA/Web3-FullStack-Starter/raw/main/screenshots/home.png',
   twitterCard: 'summary_large_image'
 })
 </script>
