@@ -61,6 +61,9 @@ const btn = $computed(() => {
 
   return { label, disabled, loading, onClick: doSubmit }
 })
+
+const mins = $computed(() => parseInt(timeRemaining / 1000 / 60))
+const seconds = $computed(() => parseInt(timeRemaining / 1000 % 60))
 </script>
 
 <template>
@@ -73,19 +76,21 @@ const btn = $computed(() => {
         <UAside>
           <div class="pr-10">
             <div v-if="isIniting">
-              loading...
+              <div class="font-bold text-primary text-center py-10 text-2xl">
+                Arena Data is loading...
+              </div>
             </div>
-            <div v-else>
-              <div>
-                Game Mode: <span class="font-bold">{{ gameMode }}</span>
+            <div v-else class="space-y-2">
+              <div class="font-bold text-primary text-center py-10 text-5xl">
+                {{ mins }} : {{ seconds }}
               </div>
-              <div>
-                Time Remaining: <span class="font-bold">{{ parseInt(timeRemaining / 1000) }}</span>
+              <div class="flex justify-between">
+                Game Mode: <span class="font-bold text-primary">{{ gameMode }}</span>
               </div>
-              <div>
-                Total Bet Amount: <span class="font-bold">{{ numberFormat(betOnTotalAmount / 1000) }}</span>
+              <div class="flex justify-between">
+                Total Bet Amount: <span class="font-bold text-primary">{{ numberFormat(betOnTotalAmount / 1000) }}</span>
               </div>
-              <div class="space-y-5 pt-10">
+              <div v-if="Object.keys(players).length > 0" class="space-y-5 pt-10">
                 <h2 class="flex font-bold mb-5 justify-between">Playing List <span>Health / Energy</span></h2>
                 <div v-for="(item, key) in players" :key="key" class="flex justify-between items-center">
                   <div class="flex  items-center">
@@ -98,8 +103,10 @@ const btn = $computed(() => {
                   </div>
                 </div>
               </div>
-              <div class="space-y-5 pt-10">
-                <h2 class="font-bold mb-5">Waiting List</h2>
+              <div v-if="waiting.length > 0" class="space-y-5 pt-10">
+                <div class="flex font-bold mb-5">
+                  Waiting List
+                </div>
                 <div v-for="(isPaid, key) in waiting" :key="key" class="flex justify-between items-center">
                   <div class="flex  items-center">
                     <DicebearAvatar :seed="key" class="rounded-full h-8 mr-2 w-8" size="3xl" />
