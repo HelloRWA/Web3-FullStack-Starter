@@ -1,4 +1,5 @@
-import {formatUnits as formatUnitsViem} from 'viem'
+import { formatUnits as formatUnitsViem } from 'viem'
+import {formatEther as formatEtherViem} from 'viem'
 export { parseEther, formatEther, parseUnits, getAddress } from 'viem'
 
 export const formatUnits = function (val, precision = 18, fraction = 4) {
@@ -19,7 +20,7 @@ export const numberFormat = (num, fraction = 6) => {
 }
 
 export const humanFormatEther = (num) => {
-  return numberFormat(formatEther(num))
+  return numberFormat(formatEtherViem(num))
 }
 
 export const shortAddress = address => address ? `${address.substr(0, 6)}...${address.substr(-4)}` : ''

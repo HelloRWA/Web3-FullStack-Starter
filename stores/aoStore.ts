@@ -61,16 +61,15 @@ export const aoStore = defineStore('aoStore', () => {
         message: rz,
         process,
       })
-      rz = useGet(rz, 'Messages[0].Tags').find(tag => tag.name === 'Balance')
-      console.log(`====> rz :`, rz)
-      return rz ? parseFloat((rz.value / 1000).toFixed(4)) : 0
+      rz = useGet(useGet(rz, 'Messages[0].Tags').find(tag => tag.name === 'Balance'), 'value', '0')
+      return parseFloat(rz)
     } catch (err) {
       console.log(`====> err :`, err)
     }
     
     return 0
   }
-  
+
   const getData = async ({process, Action}, tagFilters) => {
      let rz = await dryrun({
         process,
@@ -142,12 +141,15 @@ export const aoStore = defineStore('aoStore', () => {
   const init = async () => {
     if (!address) return
     
-    credBalance = await getBalance(CRED)
-    aoCoinBalance = await getBalance(AOCoin)
+    credBalance = (await getBalance(CRED)) / 1e3
+    aoCoinBalance = (await getBalance(AOCoin)) / 1e3
+    console.log(`====> aoCoinBalance :`, aoCoinBalance)
   }
+  
   
   return $$({ getData, address, credBalance, aoCoinBalance, sendToken, init, doLogout, doLogin })
 })
 
 if (import.meta.hot)
   import.meta.hot.accept(acceptHMRUpdate(aoStore, import.meta.hot))
+

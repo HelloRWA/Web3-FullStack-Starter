@@ -41,7 +41,7 @@ const credBtn = $computed(() => {
     <UContainer>
       <UPageHero id="deposit" title="Deposit" description="This is where you can get $AO token, deposit your CRED, AR or USDT, get $AO token." align="center">
         <h2 class="font-bold mt-10 text-center text-5xl">
-          You Own <span class="text-primary">{{ aoCoinBalance }}</span> $AO
+          You Own <span class="text-primary">{{ numberFormat(aoCoinBalance) }}</span> $AO
         </h2>
         <UPricingGrid :compact="false" :ui="{ wrapper: 'lg:grid-cols-2 mt-20' }">
           <UPricingCard title="CRED" highlight scale :badge="{ label: 'Most popular' }" description="You can get it free on ao testnet by solve the quests." :button="credBtn" orientation="vertical" align="bottom">
