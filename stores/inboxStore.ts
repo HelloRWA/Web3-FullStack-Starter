@@ -13,7 +13,18 @@ export const inboxStore = defineStore('inboxStore', () => {
   const itemsCache = $ref({})
   let isInboxLoading = $ref(false)
   
-  const state = $(lsItemRef('inboxStore', {}))
+  const state = $(lsItemRef('inboxStore', {
+    'Fv5lQPftoQ4VGhLGc-ZV0EteHaYSjsvaQQJoYxxwE40': {
+      name: 'AO Arena DAO Chat',
+      latestMsgTime: new Date(),
+      createdAt: new Date()
+    },
+    'U1HFLMW0ZykPip03efMNpUpWcDlzkdxXwtoKZrOzhEA': {
+      name: 'HelloRWA',
+      latestMsgTime: new Date(),
+      createdAt: new Date()
+    },
+  }))
   const stateArr = $computed(() => {
     return Object.keys(state).map(id => {
       return {
@@ -74,6 +85,7 @@ export const inboxStore = defineStore('inboxStore', () => {
     const rz = await message({
       process,
       signer: createDataItemSigner(globalThis.arweaveWallet),
+      Action: 'Eval',
       data,
     })
     return rz

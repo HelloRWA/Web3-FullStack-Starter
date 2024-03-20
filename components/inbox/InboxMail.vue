@@ -71,7 +71,7 @@ defineShortcuts({
 </script>
 
 <template>
-  <UDashboardPanelContent>
+  <div>
     <div class="-m-4 -top-4 z-99 sticky">
       <div class="bg-background flex  p-4  justify-between  ">
         <div class="flex gap-4 items-center">
@@ -113,5 +113,5 @@ defineShortcuts({
         </UTextarea>
       </form>
     </div>
-  </UDashboardPanelContent>
+  </div>
 </template>
