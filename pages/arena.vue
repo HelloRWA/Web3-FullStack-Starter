@@ -3,8 +3,8 @@ useSeoMeta({
   title: 'Arena'
 })
 
-// LfXGd_T_7wkMk3n8KltjDKtRNxbX - HuQJViPb0Eag_E // 1
-const pid = $ref('moR8QJPV6NzhsdwibAVoqBoozTXSWqrMROrPFYAgfMs') // 2
+const { tokenMap } = $(aoStore())
+const pid = $computed(() => tokenMap['Arena'])
 const { state } = $(aoEffectStore())
 const isIniting = $computed(() => state[pid] ? false : true)
 const gameMode = $computed(() => state[pid]?.gameMode || '')

@@ -3,29 +3,41 @@ useSeoMeta({
   title: 'Stake'
 })
 
-const credSwap = $ref(500)
-const credPay = $computed(() => credSwap)
-
-const currentStake = $ref(300000)
-const maxStake = $ref(1000 * 1000)
+let currentStake = $ref(1)
+const maxStake = $ref(1000)
 
 const round1StakeAmount = $ref(500)
 
-const depositPID = 'kzcVZhdcZOpM90eeKb-JRX3AG7TGH__S7p5I6PsqA3g'
-const { aoCoinBalance, sendToken, init } = $(aoStore())
+const { aoCoinBalance, tokenMap, sendToken, init, getData } = $(aoStore())
 let loading = $ref(false)
 
+const arenaPID = $computed(() => tokenMap['Arena'])
+
 const { showSuccess } = $(notificationStore())
-onMounted(init)
+let isLoading = $ref(true)
+const doInit = async () => {
+  isLoading = true
+  await init()
+  currentStake = (await getData({
+    process: 'Arena',
+    Action: 'getStakeTotalAmount'
+  }, {
+    Action: 'getStakeTotalAmount'
+  })) / 1000
+  console.log(`====> currentStake :`, currentStake)
+  isLoading = false
+}
+
+onMounted(doInit)
 
 const doSubmit = async () => {
   if (loading) return
   loading = true
 
-  const rz = await sendToken('CRED', depositPID, credPay)
+  const rz = await sendToken('AOCoin', arenaPID, round1StakeAmount, [{ name: 'Stake', value: arenaPID }])
   if (rz) {
-    showSuccess('Deposit successed, refreshing balance')
-    await init()
+    showSuccess('Stake successed, refreshing...')
+    await doInit()
   }
   loading = false
 }
@@ -60,8 +72,11 @@ const btn = $computed(() => {
                 <div>
                   Target Amount: <span class="text-primary"> {{ maxStake }}</span> $AO
                 </div>
-                <div>
-                  Current Staked: <span class="text-primary">{{ currentStake }}</span> $AO
+                <div class="flex space-x-2 justify-center items-center">
+                  <span>Current Staked:</span>
+                  <Loading v-if="isLoading" class="h-7 text-xl w-7" />
+                  <span v-else class="font-bold text-primary text-xl">{{ numberFormat(currentStake) }}</span>
+                  <span>$AO</span>
                 </div>
               </div>
             </template>

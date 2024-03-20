@@ -2,5 +2,5 @@
 
 </script>
 <template>
-  <UIcon name="i-line-md-loading-twotone-loop" class="animate-spin" dynamic />
+  <UIcon name="i-line-md-loading-twotone-loop" class="animate-spin" dynamic v-bind="$attrs" />
 </template>
