@@ -31,6 +31,13 @@ Then I found I could combine all of them into one: `AO Arena DAO`.
 
 ## Features
 
+### Deposit
+
+* [x] User deposit CRED to get $AO
+* [x] Launch the [$AO Coin](https://github.com/HelloRWA/Web3-FullStack-Starter/blob/main/ao/game/tokenAO.lua#L97-L145) with customized transfer logic to support `Stake` and `BetOn` logic
+* [x] Make a [deposit service process](https://github.com/HelloRWA/Web3-FullStack-Starter/blob/main/ao/game/deposit.lua) to support this
+* [WIP] Make a `Deposit Activity` List
+
 ### Chat
 
 User can add process, and send / receive the process's new message
