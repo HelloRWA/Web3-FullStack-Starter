@@ -49,8 +49,8 @@ Then I found I could combine all of them into one: `AO Arena DAO`.
 
 * [x] User stake $AO Coin to [earn arena profit share](https://github.com/HelloRWA/Web3-FullStack-Starter/blob/main/ao/game/arena.lua#L208)
 * [x] Customize the Arena code to support [stake logic](https://github.com/HelloRWA/Web3-FullStack-Starter/blob/main/ao/game/arena.lua#L424-L460)
-* [] `WIP` Make a `Stake Activity` List
-* [] `WIP` User can vote for arena proposal
+* [ ] `WIP` Make a `Stake Activity` List
+* [ ] `WIP` User can vote for arena proposal
 
 ![Arena](./screenshots/arena.png)
 
@@ -58,9 +58,9 @@ Then I found I could combine all of them into one: `AO Arena DAO`.
 
 * [x] User can watch the two players fight on the [web page](https://github.com/HelloRWA/Web3-FullStack-Starter/blob/main/components/game/warGround.vue)
 * [x] User can [bet on](https://github.com/HelloRWA/Web3-FullStack-Starter/blob/main/pages/arena.vue#L33-L51) any players while in `Waiting` game mode`
-* [] `WIP` Optimize the bot code to improve bot's AI
-* [] `WIP` User can burn $AO token to own their Arena and get profit by operating their own Arena
-* [] `WIP` User can burn $AO token to own their bot player
+* [ ] `WIP` Optimize the bot code to improve bot's AI
+* [ ] `WIP` User can burn $AO token to own their Arena and get profit by operating their own Arena
+* [ ] `WIP` User can burn $AO token to own their bot player
 
 ![Chat](./screenshots/chat.png)
 
