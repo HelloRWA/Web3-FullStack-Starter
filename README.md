@@ -2,6 +2,9 @@
 
 # AO Arena DAO
 
+[![Nuxt UI Pro](https://img.shields.io/badge/Made%20with-Nuxt%20UI%20Pro-00DC82?logo=nuxt.js&labelColor=020420)](https://ui.nuxt.com/pro?aff=KokMD))
+
+
 It was fascinating when I first saw the [AO Launch Video](https://twitter.com/aoTheComputer/status/1762545634035290465).
 
 Then I spend most of my time studying and trying AO.
@@ -49,20 +52,28 @@ Then I found I could combine all of them into one: `AO Arena DAO`.
 * [] `WIP` Make a `Stake Activity` List
 * [] `WIP` User can vote for arena proposal
 
+![Arena](./screenshots/arena.png)
+
+### Arena
+
+* [x] User can watch the two players fight on the [web page](https://github.com/HelloRWA/Web3-FullStack-Starter/blob/main/components/game/warGround.vue)
+* [x] User can [bet on](https://github.com/HelloRWA/Web3-FullStack-Starter/blob/main/pages/arena.vue#L33-L51) any players while in `Waiting` game mode`
+* [] `WIP` Optimize the bot code to improve bot's AI
+* [] `WIP` User can burn $AO token to own their Arena and get profit by operating their own Arena
+* [] `WIP` User can burn $AO token to own their bot player
+
+![Chat](./screenshots/chat.png)
+
 ### Chat
 
 User can add process, and send / receive the process's new message
 
-* [x] add new process
-* [x] process msg list
+* [x] add [new process](https://github.com/HelloRWA/Web3-FullStack-Starter/blob/main/components/inbox/NewBtn.vue)
+* [x] process [msg list](https://github.com/HelloRWA/Web3-FullStack-Starter/blob/main/components/inbox/InboxMail.vue)
 * [x] show avatar by the pid/msgId seed via [Bottts Neutral](https://www.dicebear.com/styles/bottts-neutral/)
-* [x] send message to process
-* [x] playsound while new message arrived (interval with 5 seconds)
-* [x] load more while scroll to top(which will load older msg)
-
-### ao-Effect
-
-* [] show ao-Effect ui
+* [x] [send message](https://github.com/HelloRWA/Web3-FullStack-Starter/blob/main/components/inbox/InboxMail.vue#L32-L52) to process
+* [x] [play notification sound](https://github.com/HelloRWA/Web3-FullStack-Starter/blob/main/components/inbox/InboxListMessage.vue#L32-L38) while new message arrived (interval with 5 seconds)
+* [x] [load more](https://github.com/HelloRWA/Web3-FullStack-Starter/blob/main/components/inbox/InboxMail.vue#L56-L62) while scroll to top(which will load older msg)
 
 ## Credits
 
@@ -72,14 +83,6 @@ User can add process, and send / receive the process's new message
   * Dice Bear Avatars : [click here](https://www.dicebear.com/styles/bottts-neutral/)
 
 
-
-# Nuxt UI Pro - Dashboard template
-
-[![Nuxt UI Pro](https://img.shields.io/badge/Made%20with-Nuxt%20UI%20Pro-00DC82?logo=nuxt.js&labelColor=020420)](https://ui.nuxt.com/pro)
-
-- [Live demo](https://dashboard-template.nuxt.dev/)
-- [Play on Stackblitz](https://stackblitz.com/github/nuxt-ui-pro/dashboard)
-- [Documentation](https://ui.nuxt.com/pro/getting-started)
 
 ## Quick Start
 
