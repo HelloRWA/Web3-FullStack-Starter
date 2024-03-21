@@ -78,7 +78,7 @@ function onSubmit() {
     </template>
 
     <template #right>
-      <!-- <UColorModeButton size="sm" /> -->
+      <UColorModeButton size="sm" />
 
       <UButton to="https://ui.nuxt.com/pro?aff=KokMD" target="_blank" icon="i-simple-icons-github" aria-label="GitHub" color="gray" variant="ghost" />
     </template>
