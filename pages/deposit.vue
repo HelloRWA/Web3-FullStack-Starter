@@ -3,7 +3,9 @@ useSeoMeta({
   title: 'Deposit'
 })
 
-const credSwap = $ref(0.1)
+const route = useRoute()
+
+const credSwap = $ref(route.query.debug ? 0.1 : 499)
 const credPay = $computed(() => credSwap)
 
 const arSwap = $ref(500)
