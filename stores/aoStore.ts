@@ -24,7 +24,7 @@ export const aoStore = defineStore('aoStore', () => {
   const tokenMap = $ref({
     CRED: 'Sa0iBLPNyJQrwpTTG-tWLQU-1QeUAJA73DdxGGiKoJc',
     AOCoin: 'rxl5oOyCuzrUUVB1edjrcHpcn9s9czhj4rsq4ACQGv4',
-    Arena: 'uLPuyonDbrhNMwL9UA04H9H4dLLE9iPdE0ESAjrWAqs',
+    Arena: '-_8-spu6PyX-yYaPwf_1owaWc7Rakhbe8TaJ0Yschig',
     DepositService: 'kzcVZhdcZOpM90eeKb-JRX3AG7TGH__S7p5I6PsqA3g'
   })
   
