@@ -85,7 +85,10 @@ export const inboxStore = defineStore('inboxStore', () => {
     const rz = await message({
       process,
       signer: createDataItemSigner(globalThis.arweaveWallet),
-      Action: 'Eval',
+      // tags: [{
+      //   name: 'Action',
+      //   value: 'Eval'
+      // }],
       data,
     })
     return rz
