@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     'nuxt-og-image',
     '@nuxt/ui',
     'nuxt-lodash',
+    'nuxt-gtag',
     '@nuxt/fonts',
     '@pinia/nuxt',
     '@vue-macros/nuxt',

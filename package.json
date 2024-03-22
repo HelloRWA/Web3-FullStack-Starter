@@ -41,6 +41,7 @@
     "arconnect": "^1.0.3",
     "eslint": "^8.57.0",
     "less": "^4.2.0",
+    "nuxt-gtag": "^2.0.5",
     "nuxt-lodash": "^2.5.3",
     "vue-tsc": "^2.0.6"
   }
